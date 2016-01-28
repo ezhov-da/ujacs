@@ -1,0 +1,38 @@
+<config>
+	<serverConfig>
+		<port>4444</port>
+	</serverConfig>
+	<apps>
+		<app>
+			<version>0.01a</version>
+			<extFile>.zip</extFile>
+			<name>spt</name>
+			<pathToArchiveOnServer>E:\\_own_repository_data\\java\\scheduler_production_tasks\\spt_project\\zips\\</pathToArchiveOnServer>
+			<!--название архива, который сохранится клиенту-->
+			<nameArchive>spt.zip</nameArchive>
+			<!--Название папки приложения - это та папка, где хранятся исходники-->
+			<nameFolderApp>spt</nameFolderApp>
+			<!--название файла, который запускает приложение-->
+			<fileForRunApp>RUN.bat</fileForRunApp>
+			<!--название ярлыка на рабочем столе-->
+			<lnkNameOnDesktop>TASKS</lnkNameOnDesktop>
+			<!--название иконки приложения-->	
+			<lnkNameFromArchive>task.ico</lnkNameFromArchive>
+			<!--текст vbs для создания иконки-->
+			<!-- 1 - название приложения -->
+			<!-- 2 - путь к иконки -->
+			<!-- 3 - путь к приложению -->
+			<!-- 4 - путь к рабочей папки -->
+			<shortCutCreate>
+				Dim oShell, oShortCut, sDeskTopPath
+				Set oShell = CreateObject("Wscript.Shell")
+				sDeskTopPath = oShell.SpecialFolders("Desktop") 'на рабочий стол
+				Set oShortCut = oShell.CreateShortcut(sDeskTopPath &amp; "\%s.lnk")  'название ярлыка
+				oShortCut.IconLocation = "%s" 'путь к иконке
+				oShortCut.TargetPath = "%s" 'путь к запускаемому файлу
+				oShortCut.WorkingDirectory = "%s" 'путь к рабочей папки
+				oShortCut.Save
+			</shortCutCreate>
+		</app>
+	</apps>
+</config>

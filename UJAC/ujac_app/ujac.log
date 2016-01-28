@@ -1,0 +1,10 @@
+янв 29, 2016 12:10:08 AM ru.ezhov.ujac.UJAC startUjac
+INFO: запускаем загрузку приложения
+янв 29, 2016 12:10:08 AM ru.ezhov.ujac.SocketLoadApp startClient
+INFO: загружаем файл настроек
+янв 29, 2016 12:10:08 AM ru.ezhov.ujac.SocketLoadApp createSocket
+INFO: создали сокет
+янв 29, 2016 12:10:08 AM ru.ezhov.ujac.SocketLoadApp createStream
+INFO: создали объект отправки
+янв 29, 2016 12:10:08 AM ru.ezhov.ujac.SocketLoadApp sendInfoObject
+INFO: отправляем информационный объект
