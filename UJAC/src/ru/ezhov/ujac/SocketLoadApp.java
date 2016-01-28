@@ -62,6 +62,9 @@ public class SocketLoadApp extends Thread {
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Ошибка работы сокета");
+        } catch (UnsupportedOperationException ex) {
+            LOG.log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         } finally {
             try {
                 socket.close();
@@ -109,10 +112,17 @@ public class SocketLoadApp extends Thread {
 
     private void readAppConfigFromSocket() throws IOException {
         LOG.info("читаем объект с настройками");
+        //здесь может принимать false, если приложение не поддерживается сервером обновлений
         String xmlAppConfig = dataInputStream.readUTF();
-        XStream xStream = new XStream(new DomDriver());
-        Annotations.configureAliases(xStream, ApplicationConfig.class);
-        applicationConfig = (ApplicationConfig) xStream.fromXML(xmlAppConfig);
+        if (!"false".equals(xmlAppConfig)) {
+            XStream xStream = new XStream(new DomDriver());
+            Annotations.configureAliases(xStream, ApplicationConfig.class);
+            applicationConfig = (ApplicationConfig) xStream.fromXML(xmlAppConfig);
+            LOG.log(Level.INFO, "прочитан конфигурационный файл:\n{0}", applicationConfig.toString());
+        } else {
+            throw new UnsupportedOperationException("Неподдерживаемое приложение для обновления");
+        }
+
     }
 
     private void loadFileFromSocket() throws IOException {
@@ -120,6 +130,7 @@ public class SocketLoadApp extends Thread {
         File file = new File(applicationConfig.getNameArchive());
         file.delete();
         long fileSize = dataInputStream.readLong(); //получаем размер файла
+
         if (fileSize == 0) {
             System.exit(0);
         }

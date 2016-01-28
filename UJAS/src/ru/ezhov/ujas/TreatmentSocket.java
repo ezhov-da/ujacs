@@ -19,38 +19,39 @@ import ru.ezhov.common.objects.ujacs.server.CommonConfig;
  * @author ezhov_da
  */
 public class TreatmentSocket extends Thread {
-
+    
     private static final Logger LOG = Logger.getLogger(TreatmentSocket.class.getName());
     private final Socket socket;
     private final DataInputStream dataInputStream;
     private final DataOutputStream dataOutputStream;
     private InformationClass informationClass;
     private CommonConfig commonConfig;
-
+    
     public TreatmentSocket(Socket socket) throws IOException {
         this.socket = socket;
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
     }
-
+    
     @Override
     public void run() {
-        startConnect();
-    }
-
-    private void startConnect() {
+        LOG.log(Level.INFO, "соединились: {0}", socket.getInetAddress().getHostAddress());
         try {
-            LOG.log(Level.INFO, "соединились");
-            createInfoObjectFromSocket();
-            try {
-                loadCommonConfig();
-            } catch (Exception ex) {
-                LOG.log(Level.WARNING, "не удалось загрузить файл настроек", ex);
-                return;
-            }
+            startConnect();
+        } catch (FileNotFoundException ex) {
+            LOG.log(Level.WARNING, "не удалось загрузить файл настроек", ex);
+        } catch (IOException ex) {
+            LOG.log(Level.WARNING, "ошибка чтения присланного объекта", ex);
+        }
+        
+    }
+    
+    private void startConnect() throws FileNotFoundException, IOException {
+        createInfoObjectFromSocket();
+        loadCommonConfig();
+        
+        try {
             viewApp();
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, "ошибка подключения", e);
         } catch (BadLocationException ex) {
             LOG.log(Level.SEVERE, "не удалось прочитать файл для отправки", ex);
         } finally {
@@ -61,7 +62,7 @@ public class TreatmentSocket extends Thread {
             }
         }
     }
-
+    
     private void createInfoObjectFromSocket() throws IOException {
         LOG.info("создаем присланный объект");
         String xmlObject = getXmlObject();
@@ -77,27 +78,51 @@ public class TreatmentSocket extends Thread {
                 }
         );
     }
-
+    
     private String getXmlObject() throws IOException {
         Object object = dataInputStream.readUTF();
-                LOG.log(Level.INFO, "считали xml:\n{0}", object.toString());
-
+        LOG.log(Level.INFO, "считали xml:\n{0}", object.toString());
         return object.toString();
     }
 
-    private void loadCommonConfig() throws Exception {
+    /**
+     * загружаем общие настройки сервера
+     *
+     * @throws FileNotFoundException
+     */
+    private void loadCommonConfig() throws FileNotFoundException {
+        LOG.info("загружается общий конфигурационный файл");
         commonConfig = LoadProperties.getCommonConfig();
+        LOG.info("загружен общий конфигурационный файл");
     }
 
+    /**
+     * просмотр наличия указанного приложения
+     *
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws BadLocationException
+     */
     private void viewApp() throws IOException, FileNotFoundException, BadLocationException {
         List<ApplicationConfig> applicationConfigs = commonConfig.getApplicationConfigs();
-        for (ApplicationConfig applicationConfig : applicationConfigs) {
-            if (applicationConfig.getName().equals(informationClass.getNameApplication())) {
-                finderApp(applicationConfig);
+        ApplicationConfig applicationConfigForCheck = new ApplicationConfig();
+        applicationConfigForCheck.setName(informationClass.getNameApplication());
+        if (applicationConfigs.contains(applicationConfigForCheck)) {
+            for (ApplicationConfig applicationConfig : applicationConfigs) {
+                if (applicationConfig.getName().equals(informationClass.getNameApplication())) {
+                    finderApp(applicationConfig);
+                }
             }
+        } else {
+            sendUnsupportedApp();
         }
     }
-
+    
+    private void sendUnsupportedApp() throws IOException {
+        dataOutputStream.writeUTF("False");
+        dataOutputStream.flush();
+    }
+    
     private void finderApp(ApplicationConfig applicationConfig) throws IOException, FileNotFoundException, BadLocationException {
         switch (informationClass.getCommands()) {
             case CHECK_UPDATE:
@@ -112,7 +137,7 @@ public class TreatmentSocket extends Thread {
                 throw new IllegalArgumentException("неподдерживаемая команда");
         }
     }
-
+    
     private void commandCheckVersion(ApplicationConfig applicationConfig) throws IOException {
         LOG.log(Level.INFO, "команда на проверку версии:\nназвание приложения: {0}\nтекущая версия приложения: {0},", new Object[]{
             applicationConfig.getName(), applicationConfig.getVersion()
@@ -126,28 +151,28 @@ public class TreatmentSocket extends Thread {
         }
         dataOutputStream.flush();
     }
-
+    
     private boolean isNotMatchesVersion(ApplicationConfig applicationConfig) {
         return !applicationConfig.getVersion().equals(informationClass.getVersion());
     }
-
+    
     private void commandLoadFile(ApplicationConfig applicationConfig) throws IOException, FileNotFoundException, BadLocationException {
         sendAppConfig(applicationConfig);
         sendFile(applicationConfig);
     }
-
+    
     private void sendAppConfig(ApplicationConfig applicationConfig) throws IOException {
         String xmlStr = createXmlAppConfig(applicationConfig);
         dataOutputStream.writeUTF(xmlStr);
         dataOutputStream.flush();
     }
-
+    
     private String createXmlAppConfig(ApplicationConfig applicationConfig) {
         XStream xStream = new XStream(new DomDriver());
         Annotations.configureAliases(xStream, ApplicationConfig.class);
         return xStream.toXML(applicationConfig);
     }
-
+    
     private void sendFile(ApplicationConfig applicationConfig) throws FileNotFoundException, IOException, BadLocationException {
         FileInputStream fileExporReader = null;
         try {

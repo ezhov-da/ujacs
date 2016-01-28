@@ -4,12 +4,12 @@
 	</serverConfig>
 	<apps>
 		<app>
-			<version>0.01a</version>
+			<version>test_zip_folder</version>
 			<extFile>.zip</extFile>
-			<name>spt</name>
-			<pathToArchiveOnServer>E:\\_own_repository_data\\java\\scheduler_production_tasks\\spt_project\\zips\\</pathToArchiveOnServer>
+			<name>test</name>
+			<pathToArchiveOnServer></pathToArchiveOnServer>
 			<!--название архива, который сохранится клиенту-->
-			<nameArchive>spt.zip</nameArchive>
+			<nameArchive>test.zip</nameArchive>
 			<!--Название папки приложения - это та папка, где хранятся исходники-->
 			<nameFolderApp>spt</nameFolderApp>
 			<!--название файла, который запускает приложение-->

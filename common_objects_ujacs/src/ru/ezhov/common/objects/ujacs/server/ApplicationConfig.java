@@ -102,12 +102,51 @@ public class ApplicationConfig {
         this.shortCutCreate = shortCutCreate;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
     public String getFullPathToArchiveApp() {
         return pathToArchiveOnServer + version + extFile;
     }
+
+    @Override
+    public String toString() {
+        return String.format("version: %s\n"
+                + "extFile: %s\n"
+                + "name: %s\n"
+                + "nameArchive: %s\n"
+                + "nameFolderApp: %s\n"
+                + "fileForRunApp: %s\n"
+                + "lnkNameOnDesktop: %s\n"
+                + "lnkNameFromArchive: %s\n"
+                + "shortCutCreate: %s\n"
+                + "pathToArchiveOnServer: %s\n",
+                version,
+                extFile,
+                name,
+                nameArchive,
+                nameFolderApp,
+                fileForRunApp,
+                lnkNameOnDesktop,
+                lnkNameFromArchive,
+                shortCutCreate,
+                pathToArchiveOnServer);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ApplicationConfig other = (ApplicationConfig) obj;
+        return !((this.name == null) ? (other.name != null) : !this.name.equals(other.name));
+    }
+
 }

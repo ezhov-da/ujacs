@@ -11,6 +11,7 @@ import ru.ezhov.common.objects.ujacs.server.ServerConfig;
 
 /**
  * Загрузчик настроек
+ *
  * @author ezhov_da
  */
 public class LoadProperties {
@@ -21,7 +22,7 @@ public class LoadProperties {
     private LoadProperties() {
     }
 
-    public static synchronized CommonConfig getCommonConfig() throws Exception {
+    public static synchronized CommonConfig getCommonConfig() throws FileNotFoundException {
         XStream xStream = new XStream(new DomDriver());
         Annotations.configureAliases(xStream, CommonConfig.class);
         Annotations.configureAliases(xStream, ServerConfig.class);
