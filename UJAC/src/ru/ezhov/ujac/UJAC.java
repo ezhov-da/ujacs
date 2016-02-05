@@ -34,6 +34,8 @@ public class UJAC {
             Logger.getLogger(UJAC.class.getName()).log(Level.SEVERE, null, ex);
         }
         LOG.info("запускаем загрузку приложения");
-        new SocketLoadApp().start();
+        SocketLoadApp socketLoadApp = new SocketLoadApp();
+        socketLoadApp.start();
+        LOG.info("загрузка приложения завершена");
     }
 }

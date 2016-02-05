@@ -1079,6 +1079,7 @@ is divided into following sections:
         <!--копируем файлы помощники-->
         <copy file="${config.file}" todir="${folder.app}"/>
         <copy file="${logger.file}" todir="${folder.app}"/>        
+        <copy file="${run.bat.file}" todir="${folder.app}"/>        
     </target>
     <target depends="init,compile,-pre-jar,-do-jar-without-libraries,-do-jar-with-libraries,-post-jar" name="-do-jar"/>
     <target depends="init,compile,-pre-jar,-do-jar,-post-jar" description="Build JAR." name="jar"/>

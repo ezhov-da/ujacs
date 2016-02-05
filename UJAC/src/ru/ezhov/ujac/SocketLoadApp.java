@@ -1,8 +1,5 @@
 package ru.ezhov.ujac;
 
-import com.thoughtworks.xstream.*;
-import com.thoughtworks.xstream.annotations.Annotations;
-import com.thoughtworks.xstream.io.xml.*;
 import java.io.*;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -13,13 +10,15 @@ import javax.swing.JOptionPane;
 import ru.ezhov.common.objects.ujacs.*;
 import ru.ezhov.common.objects.ujacs.client.ClientConfig;
 import ru.ezhov.common.objects.ujacs.server.ApplicationConfig;
+import ru.ezhov.common.objects.ujacs.tools.JsonConverter;
+import ru.ezhov.common.objects.ujacs.tools.LoadProperties;
 
 /**
  * Обрабатываем подключение
  *
  * @author ezhov_da
  */
-public class SocketLoadApp extends Thread {
+public class SocketLoadApp {
 
     private static final Logger LOG = Logger.getLogger(SocketLoadApp.class.getName());
     private ClientConfig clientConfig;
@@ -28,8 +27,7 @@ public class SocketLoadApp extends Thread {
     private DataInputStream dataInputStream;
     private ApplicationConfig applicationConfig;
 
-    @Override
-    public void run() {
+    public void start() {
         startClient();
     }
 
@@ -56,7 +54,6 @@ public class SocketLoadApp extends Thread {
             removeAndCreateFolder();
             unZipArchive();
             createVbs();
-            socket.close();
             LOG.info("загрузка файла завершена");
             JOptionPane.showMessageDialog(null, "Приложение обновлено!", "Обновление приложения...", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
@@ -75,7 +72,7 @@ public class SocketLoadApp extends Thread {
     }
 
     private void loadClientConfig() throws IOException {
-        clientConfig = LoadProperties.INSTANCE.getProperties();
+        clientConfig = LoadProperties.getClientConfig();
         LOG.log(Level.INFO, "получен файл с настройками приложения:\n{0}", clientConfig.toString());
     }
 
@@ -94,20 +91,24 @@ public class SocketLoadApp extends Thread {
         InformationClass informationClass = new InformationClass(clientConfig.getNameApp(), Commands.NEW_LOAD);
         informationClass.setDate(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(new Date()));
         informationClass.setUserName(System.getProperty("user.name"));
+        informationClass.setVersion("0.0");
         return informationClass;
     }
 
     private void sendInfoObject(InformationClass informationClass) throws IOException {
-        LOG.info("отправляем информационный объект");
+        LOG.log(Level.INFO, "\nформируем xml из объекта:\n{0}", informationClass);
         String string = createXmlFromInfoObject(informationClass);
+        LOG.log(Level.INFO, "отправляем информационный объект: {0}", string);
         dataOutputStream.writeUTF(string);
         dataOutputStream.flush();
+        LOG.info("информационный объект отправлен");
     }
 
     private String createXmlFromInfoObject(InformationClass informationClass) {
-        XStream xStream = new XStream(new DomDriver());
-        Annotations.configureAliases(xStream, InformationClass.class);
-        return xStream.toXML(informationClass);
+        LOG.info("создаем информационный объект");
+        String string = JsonConverter.getInstance().convertToJsonObject(informationClass);
+        LOG.log(Level.INFO, "\nсоздали информационный объект:\n{0}", string);
+        return string;
     }
 
     private void readAppConfigFromSocket() throws IOException {
@@ -115,9 +116,7 @@ public class SocketLoadApp extends Thread {
         //здесь может принимать false, если приложение не поддерживается сервером обновлений
         String xmlAppConfig = dataInputStream.readUTF();
         if (!"false".equals(xmlAppConfig)) {
-            XStream xStream = new XStream(new DomDriver());
-            Annotations.configureAliases(xStream, ApplicationConfig.class);
-            applicationConfig = (ApplicationConfig) xStream.fromXML(xmlAppConfig);
+            applicationConfig = (ApplicationConfig) JsonConverter.getInstance().convertFromJsonClass(xmlAppConfig, ApplicationConfig.class);
             LOG.log(Level.INFO, "прочитан конфигурационный файл:\n{0}", applicationConfig.toString());
         } else {
             throw new UnsupportedOperationException("Неподдерживаемое приложение для обновления");

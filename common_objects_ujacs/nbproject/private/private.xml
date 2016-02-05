@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="ujacs"/>
+        <group name="ujacs">
+            <file>file:/G:/repositoryGit/ujacs/common_objects_ujacs/src/ru/ezhov/common/objects/ujacs/InformationClass.java</file>
+            <file>file:/G:/repositoryGit/ujacs/common_objects_ujacs/src/ru/ezhov/common/objects/ujacs/tools/Converter.java</file>
+            <file>file:/G:/repositoryGit/ujacs/common_objects_ujacs/src/ru/ezhov/common/objects/ujacs/TestCommonObjectsUjacs.java</file>
+            <file>file:/G:/repositoryGit/ujacs/common_objects_ujacs/src/ru/ezhov/common/objects/ujacs/server/ServerConfig.java</file>
+            <file>file:/G:/repositoryGit/ujacs/common_objects_ujacs/src/ru/ezhov/common/objects/ujacs/tools/LoadProperties.java</file>
+            <file>file:/G:/repositoryGit/ujacs/common_objects_ujacs/src/ru/ezhov/common/objects/ujacs/server/CommonConfig.java</file>
+            <file>file:/G:/repositoryGit/ujacs/common_objects_ujacs/src/ru/ezhov/common/objects/ujacs/client/ClientConfig.java</file>
+        </group>
     </open-files>
 </project-private>

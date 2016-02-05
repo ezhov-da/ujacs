@@ -1,5 +1,6 @@
 package ru.ezhov.ujas;
 
+import ru.ezhov.common.objects.ujacs.tools.LoadProperties;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -8,6 +9,7 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import ru.ezhov.common.objects.ujacs.server.CommonConfig;
 
 /**
  *
@@ -46,7 +48,8 @@ public class Server {
     }
 
     private void initPort() throws Exception {
-        port = LoadProperties.getCommonConfig().getServerConfig().getPort();
+        CommonConfig commonConfig = LoadProperties.getCommonConfig();
+        port = commonConfig.getServerConfig().getPort();
     }
 
     private void startServerSocket() throws IOException {

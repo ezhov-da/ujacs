@@ -1,13 +1,11 @@
 package ru.ezhov.common.objects.ujacs.client;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.logging.Logger;
 
 /**
  *
  * @author ezhov_da
  */
-@XStreamAlias("config")
 public class ClientConfig {
 
     private static final Logger LOG = Logger.getLogger(ClientConfig.class.getName());

@@ -1,8 +1,6 @@
 package ru.ezhov.ujas;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.Annotations;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import ru.ezhov.common.objects.ujacs.tools.LoadProperties;
 import java.net.Socket;
 import java.io.*;
 import java.util.List;
@@ -12,6 +10,7 @@ import javax.swing.text.BadLocationException;
 import ru.ezhov.common.objects.ujacs.InformationClass;
 import ru.ezhov.common.objects.ujacs.server.ApplicationConfig;
 import ru.ezhov.common.objects.ujacs.server.CommonConfig;
+import ru.ezhov.common.objects.ujacs.tools.JsonConverter;
 
 /**
  * Класс обрабатывает подключения
@@ -19,20 +18,20 @@ import ru.ezhov.common.objects.ujacs.server.CommonConfig;
  * @author ezhov_da
  */
 public class TreatmentSocket extends Thread {
-    
+
     private static final Logger LOG = Logger.getLogger(TreatmentSocket.class.getName());
     private final Socket socket;
     private final DataInputStream dataInputStream;
     private final DataOutputStream dataOutputStream;
     private InformationClass informationClass;
     private CommonConfig commonConfig;
-    
+
     public TreatmentSocket(Socket socket) throws IOException {
         this.socket = socket;
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
     }
-    
+
     @Override
     public void run() {
         LOG.log(Level.INFO, "соединились: {0}", socket.getInetAddress().getHostAddress());
@@ -43,13 +42,12 @@ public class TreatmentSocket extends Thread {
         } catch (IOException ex) {
             LOG.log(Level.WARNING, "ошибка чтения присланного объекта", ex);
         }
-        
+
     }
-    
+
     private void startConnect() throws FileNotFoundException, IOException {
         createInfoObjectFromSocket();
         loadCommonConfig();
-        
         try {
             viewApp();
         } catch (BadLocationException ex) {
@@ -58,18 +56,16 @@ public class TreatmentSocket extends Thread {
             try {
                 socket.close();
             } catch (IOException e) {
-                //пока не волнует корректность закрытия подключения
+                LOG.log(Level.SEVERE, "ошибка на закрытии сокета", e);
             }
         }
     }
-    
+
     private void createInfoObjectFromSocket() throws IOException {
         LOG.info("создаем присланный объект");
         String xmlObject = getXmlObject();
-        XStream xStream = new XStream(new DomDriver());
-        Annotations.configureAliases(xStream, InformationClass.class);
-        LOG.info("создаем присланный объект из xml");
-        informationClass = (InformationClass) xStream.fromXML(xmlObject);
+        LOG.log(Level.INFO, "\nначинаем формировать информационный класс из XML:\n{0}", xmlObject);
+        instanceInfoClassFromSocket(xmlObject);
         LOG.log(
                 Level.INFO,
                 "подключился:\nдата: {0}\nпользователь: {1}\nназвание приложения: {2}",
@@ -78,11 +74,17 @@ public class TreatmentSocket extends Thread {
                 }
         );
     }
-    
+
     private String getXmlObject() throws IOException {
-        Object object = dataInputStream.readUTF();
-        LOG.log(Level.INFO, "считали xml:\n{0}", object.toString());
-        return object.toString();
+        String string = dataInputStream.readUTF();
+        LOG.log(Level.INFO, "считали xml:\n{0}", string);
+        return string;
+    }
+
+    private void instanceInfoClassFromSocket(String infoClassJson) {
+        LOG.info("начинаем создавать информационный объект из XML");
+        informationClass = (InformationClass) JsonConverter.getInstance().convertFromJsonClass(infoClassJson, InformationClass.class);
+        LOG.info("информационный объект создан из XML");
     }
 
     /**
@@ -117,12 +119,12 @@ public class TreatmentSocket extends Thread {
             sendUnsupportedApp();
         }
     }
-    
+
     private void sendUnsupportedApp() throws IOException {
         dataOutputStream.writeUTF("False");
         dataOutputStream.flush();
     }
-    
+
     private void finderApp(ApplicationConfig applicationConfig) throws IOException, FileNotFoundException, BadLocationException {
         switch (informationClass.getCommands()) {
             case CHECK_UPDATE:
@@ -137,7 +139,7 @@ public class TreatmentSocket extends Thread {
                 throw new IllegalArgumentException("неподдерживаемая команда");
         }
     }
-    
+
     private void commandCheckVersion(ApplicationConfig applicationConfig) throws IOException {
         LOG.log(Level.INFO, "команда на проверку версии:\nназвание приложения: {0}\nтекущая версия приложения: {0},", new Object[]{
             applicationConfig.getName(), applicationConfig.getVersion()
@@ -151,28 +153,25 @@ public class TreatmentSocket extends Thread {
         }
         dataOutputStream.flush();
     }
-    
+
     private boolean isNotMatchesVersion(ApplicationConfig applicationConfig) {
         return !applicationConfig.getVersion().equals(informationClass.getVersion());
     }
-    
+
     private void commandLoadFile(ApplicationConfig applicationConfig) throws IOException, FileNotFoundException, BadLocationException {
         sendAppConfig(applicationConfig);
         sendFile(applicationConfig);
     }
-    
+
     private void sendAppConfig(ApplicationConfig applicationConfig) throws IOException {
         String xmlStr = createXmlAppConfig(applicationConfig);
         dataOutputStream.writeUTF(xmlStr);
-        dataOutputStream.flush();
     }
-    
+
     private String createXmlAppConfig(ApplicationConfig applicationConfig) {
-        XStream xStream = new XStream(new DomDriver());
-        Annotations.configureAliases(xStream, ApplicationConfig.class);
-        return xStream.toXML(applicationConfig);
+        return JsonConverter.getInstance().convertToJsonObject(applicationConfig);
     }
-    
+
     private void sendFile(ApplicationConfig applicationConfig) throws FileNotFoundException, IOException, BadLocationException {
         FileInputStream fileExporReader = null;
         try {

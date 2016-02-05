@@ -1,14 +1,11 @@
 package ru.ezhov.common.objects.ujacs;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 /**
  * Данный класс предназначен для отправки информации о том, какой инструмент
  * требует обновления
  * <p>
  * @author ezhov_da
  */
-@XStreamAlias("infoClass")
 public class InformationClass {
 
     private final String nameApplication;
@@ -56,7 +53,7 @@ public class InformationClass {
 
     @Override
     public String toString() {
-        return nameApplication;
+        return "InformationClass{" + "nameApplication=" + nameApplication + ", date=" + date + ", userName=" + userName + ", commands=" + commands + ", version=" + version + '}';
     }
 
 }
