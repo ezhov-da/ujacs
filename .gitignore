@@ -1,2 +1,3 @@
-/UJAC/ujac.log
-/UJAS/UJAS.log
+target
+*.iml
+.idea
