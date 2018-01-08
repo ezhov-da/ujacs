@@ -1,0 +1,57 @@
+<!--TODO: implements Xml Objects for unpack-->
+<unpack>
+    <dirs>
+        <dir name="server">
+            <dirs>
+                <dir name="apps">
+                    <files>
+                        <file name="README.txt"/>
+                    </files>
+                </dir>
+                <dir name="configs">
+                    <files>
+                        <file name="apps.xml"/>
+                        <file name="config.properties"/>
+                        <file name="README.txt"/>
+                    </files>
+                </dir>
+                <dir name="icon">
+                    <files>
+                        <file name="default_16x16.png"/>
+                        <file name="install_16x16.png"/>
+                        <file name="install_32x32.ico"/>
+                        <file name="java_16x16.png"/>
+                        <file name="README.txt"/>
+                        <file name="run_16x16.png"/>
+                        <file name="service_16x16.png"/>
+                        <file name="spt_16x16.png"/>
+                        <file name="stop_16x16.png"/>
+                        <file name="update_16x16.png"/>
+                    </files>
+                </dir>
+                <dir name="img">
+                    <files>
+                        <file name="background_install.jpg"/>
+                        <file name="README.txt"/>
+                    </files>
+                </dir>
+                <dir name="install">
+                    <dirs>
+                        <dir name="first_install">
+                            <files>
+                                <file name="app-manager.ico"/>
+                                <file name="config(for-app).properties"/>
+                                <file name="README.txt"/>
+                                <file name="vbscript.vbs"/>
+                            </files>
+                        </dir>
+                        <dir name="install_service_app"></dir>
+                    </dirs>
+                </dir>
+            </dirs>
+            <files>
+                <file name="apps.xml"/>
+            </files>
+        </dir>
+    </dirs>
+</unpack>

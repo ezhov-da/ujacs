@@ -45,11 +45,11 @@ public class ServerHolder {
         } catch (IOException ex) {
             String text = "Не удалось прочитать файл настроек сервера.";
             LOG.log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, text + "\n" + ex.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, text + "\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException ex) {
             String text = "Не удалось пропарсить номер порта, проверьте корректность.";
             LOG.log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, text + "\n" + ex.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, text + "\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

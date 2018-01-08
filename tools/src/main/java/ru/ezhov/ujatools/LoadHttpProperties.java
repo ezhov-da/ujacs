@@ -15,7 +15,7 @@ public class LoadHttpProperties
 
     public void load() throws IOException
     {
-        PropertiesHolder propertiesHolder = new PropertiesHolder("/ru/ezhov/ujatools/src/installer.properties");
+        PropertiesHolder propertiesHolder = new PropertiesHolder("/installer.properties");
         try
         {
             propertiesHolder.loadPropertyClass(LoadHttpProperties.class);

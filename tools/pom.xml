@@ -8,10 +8,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>uja-tools</artifactId>
+    <artifactId>ujacs-tools</artifactId>
     <packaging>jar</packaging>
 
-    <name>uja-tools</name>
+    <name>ujacs-tools</name>
     <url>http://maven.apache.org</url>
 
     <properties>

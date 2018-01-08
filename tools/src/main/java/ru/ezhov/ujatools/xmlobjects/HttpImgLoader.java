@@ -7,15 +7,12 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
- *
  * @author ezhov_da
  */
-public class HttpImgLoader
-{
+public class HttpImgLoader {
     private static final Logger LOG = Logger.getLogger(HttpImgLoader.class.getName());
 
-    public Image loadImage(String urlImg) throws IOException
-    {
+    public Image loadImage(String urlImg) throws IOException {
         URL url = new URL(urlImg);
         Image image = ImageIO.read(url);
         return image;

@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author ezhov_da
  */
-public class ApplicationInstance
-{
+public class ApplicationInstance {
     private String nameAppUser;
     private String nameAppSystem;
     private String version;
@@ -22,124 +20,100 @@ public class ApplicationInstance
     private String commandRunApp;
     private String httpIconImage;
 
-    public ApplicationInstance()
-    {
+    public ApplicationInstance() {
         listUsersGood = new ArrayList<String>();
         listUsersBad = new ArrayList<String>();
     }
 
-    public String getNameAppUser()
-    {
+    public String getNameAppUser() {
         return nameAppUser;
     }
 
-    public String getNameAppSystem()
-    {
+    public String getNameAppSystem() {
         return nameAppSystem;
     }
 
-    public String getVersion()
-    {
+    public String getVersion() {
         return version;
     }
 
-    public String getFileZip()
-    {
+    public String getFileZip() {
         return fileZip + "_" + version + ".zip";
     }
 
-    public String getHttpLoad()
-    {
+    public String getHttpLoad() {
         return httpLoad;
     }
 
-    public String getListOfChanges()
-    {
+    public String getListOfChanges() {
         return listOfChanges;
     }
 
-    public List<String> getListUsersGood()
-    {
+    public List<String> getListUsersGood() {
         return listUsersGood;
     }
 
-    public List<String> getListUsersBad()
-    {
+    public List<String> getListUsersBad() {
         return listUsersBad;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public String getNews()
-    {
+    public String getNews() {
         return news;
     }
 
-    public String getCommandRunApp()
-    {
+    public String getCommandRunApp() {
         return commandRunApp;
     }
 
-    public String getHttpIconImage()
-    {
+    public String getHttpIconImage() {
         return httpIconImage;
     }
 
-    public void setNameAppUser(String nameAppUser)
-    {
+    public void setNameAppUser(String nameAppUser) {
         this.nameAppUser = nameAppUser;
     }
 
-    public void setNameAppSystem(String nameAppSystem)
-    {
+    public void setNameAppSystem(String nameAppSystem) {
         this.nameAppSystem = nameAppSystem;
     }
 
-    public void setVersion(String version)
-    {
+    public void setVersion(String version) {
         this.version = version;
     }
 
-    public void setFileZip(String fileZip)
-    {
+    public void setFileZip(String fileZip) {
         this.fileZip = fileZip;
     }
 
-    public void setHttpLoad(String httpLoad)
-    {
+    public void setHttpLoad(String httpLoad) {
         this.httpLoad = httpLoad;
     }
 
-    public void setListOfChanges(String listOfChanges)
-    {
+    public void setListOfChanges(String listOfChanges) {
         this.listOfChanges = listOfChanges;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setNews(String news)
-    {
+    public void setNews(String news) {
         this.news = news;
     }
 
-    public void setCommandRunApp(String commandRunApp)
-    {
+    public void setCommandRunApp(String commandRunApp) {
         this.commandRunApp = commandRunApp;
     }
 
-    public void setHttpIconImage(String httpIconImage)
-    {
+    public void setHttpIconImage(String httpIconImage) {
         this.httpIconImage = httpIconImage;
     }
 
-    public String getNameUserFull()
-    {
+    public String getNameUserFull() {
         return String.format(nameAppUser, version);
     }
 }

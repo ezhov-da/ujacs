@@ -1,4 +1,4 @@
-package ru.ezhov.server.frame;
+package ru.ezhov.server.gui;
 
 import java.awt.Component;
 import java.awt.Dimension;

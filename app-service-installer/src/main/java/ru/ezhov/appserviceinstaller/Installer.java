@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 import ru.ezhov.ujatools.HttpFileLoader;
 import ru.ezhov.ujatools.PropertyHttpHolder;
 import ru.ezhov.ujatools.UnzipFile;
@@ -13,10 +14,10 @@ import ru.ezhov.ujatools.UnzipFile;
 /**
  * Класс, отвечающий за полный цикл установки "Сервиса приложений"
  * <p>
+ *
  * @author ezhov_da
  */
-public class Installer
-{
+public class Installer {
     private static final Logger LOG = Logger.getLogger(Installer.class.getName());
 
     private File directoryForInstall;
@@ -31,23 +32,19 @@ public class Installer
     private String nameArchive;
     private HttpFileLoader httpFileLoader;
 
-    public Installer(File directoryForInstall)
-    {
+    public Installer(File directoryForInstall) {
         this.directoryForInstall = directoryForInstall;
     }
 
     /**
      * Установка сервиса приложения
      */
-    public void install()
-    {
+    public void install() {
         propertyHttpHolder = PropertyHttpHolder.getInstance();
         initVarible();
-        if (!folderToFile.canExecute())
-        {
+        if (!folderToFile.canExecute()) {
             installService();
-        } else
-        {
+        } else {
             JOptionPane.showMessageDialog(
                     null,
                     String.format(propertyHttpHolder.getProperty("error.app.already.install.body"), folderToFile.getAbsolutePath()),
@@ -59,8 +56,7 @@ public class Installer
     /**
      * Инициализируем переменные
      */
-    private void initVarible()
-    {
+    private void initVarible() {
         httpInstallAppServiceLoader = propertyHttpHolder.getProperty("http.install.app.service.loader");
         pathToAppServiceFolder = directoryForInstall.getAbsolutePath() + File.separator + propertyHttpHolder.getProperty("name.folder.app.service");
         folderToFile = new File(pathToAppServiceFolder);
@@ -69,16 +65,13 @@ public class Installer
     /**
      * Устанавливаем сервис
      */
-    private void installService()
-    {
+    private void installService() {
         folderToFile.mkdirs();
         nameZipArchive = propertyHttpHolder.getProperty("name.output.archive.app.service.install");
         nameArchive = pathToAppServiceFolder + File.separator + nameZipArchive;
         httpFileLoader = new HttpFileLoader(httpInstallAppServiceLoader, nameArchive);
-        if (loadArchive())
-        {
-            if (unzipFile())
-            {
+        if (loadArchive()) {
+            if (unzipFile()) {
                 installApp();
             }
         }
@@ -87,20 +80,21 @@ public class Installer
     /**
      * загружаем архив
      * <p>
+     *
      * @return
      */
-    private boolean loadArchive()
-    {
-        try
-        {
+    private boolean loadArchive() {
+        try {
             httpFileLoader.load();
             return true;
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
-                    String.format(propertyHttpHolder.getProperty("error.load.install.file.servuce.app.body") + ": \n" + ex.getMessage(), httpInstallAppServiceLoader),
+                    String.format(
+                            propertyHttpHolder.getProperty("error.load.install.file.servuce.app.body") + ": \n" + ex.getMessage(),
+                            httpInstallAppServiceLoader
+                    ),
                     propertyHttpHolder.getProperty("error.load.install.file.servuce.app.title"),
                     JOptionPane.INFORMATION_MESSAGE);
             return false;
@@ -110,19 +104,17 @@ public class Installer
     /**
      * Распаковываем файл
      * <p>
+     *
      * @return
      */
-    private boolean unzipFile()
-    {
+    private boolean unzipFile() {
         UnzipFile unzipFile = new UnzipFile();
         File fileArchive = new File(nameArchive);
-        try
-        {
+        try {
             unzipFile.unzip(new File(pathToAppServiceFolder), fileArchive);
             fileArchive.delete();
             return true;
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
@@ -142,33 +134,28 @@ public class Installer
     /**
      * Устанавливаем
      */
-    private void installApp()
-    {
+    private void installApp() {
         httpFileIconAppService = propertyHttpHolder.getProperty("http.file.icon.app.service");
         nameIcon = propertyHttpHolder.getProperty("name.icon.app.service");
         fullPathToIcon = pathToAppServiceFolder + File.separator + nameIcon;
         httpFileLoader = new HttpFileLoader(httpFileIconAppService, fullPathToIcon);
         nameApplication = propertyHttpHolder.getProperty("name.app.service");
-        if (!loadIcon())
-        {
+        if (!loadIcon()) {
             return;
         }
         httpFileVBScript = propertyHttpHolder.getProperty("http.file.vbscript");
         nameScript = propertyHttpHolder.getProperty("name.file.vbscript");
         fullPathToScript = pathToAppServiceFolder + File.separator + nameScript;
         httpFileLoader = new HttpFileLoader(httpFileVBScript, fullPathToScript);
-        if (loadScript())
-        {
-            if (installScript())
-            {
+        if (loadScript()) {
+            if (installScript()) {
                 int runNow = JOptionPane.showConfirmDialog(
                         null,
                         String.format(propertyHttpHolder.getProperty("good.install.body"), nameApplication),
                         propertyHttpHolder.getProperty("good.install.title"),
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
-                if (runNow == JOptionPane.YES_OPTION)
-                {
+                if (runNow == JOptionPane.YES_OPTION) {
                     RunApp.run(nameApplication);
                 }
                 System.exit(0);
@@ -179,16 +166,14 @@ public class Installer
     /**
      * Грузим иконку
      * <p>
+     *
      * @return
      */
-    private boolean loadIcon()
-    {
-        try
-        {
+    private boolean loadIcon() {
+        try {
             httpFileLoader.load();
             return true;
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
@@ -202,16 +187,14 @@ public class Installer
     /**
      * Грузим скрипт
      * <p>
+     *
      * @return
      */
-    private boolean loadScript()
-    {
-        try
-        {
+    private boolean loadScript() {
+        try {
             httpFileLoader.load();
             return true;
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
@@ -230,19 +213,17 @@ public class Installer
     /**
      * Инициализируем скрипт
      * <p>
+     *
      * @return
      */
-    private boolean installScript()
-    {
-        try
-        {
+    private boolean installScript() {
+        try {
             fileScript = new File(fullPathToScript);
             scanner = new Scanner(fileScript, propertyHttpHolder.getProperty("charset.for.read.and.replace.vbscript.constants"));
             StringBuilder stringBuilder = new StringBuilder();
             pathToFileRunAppService =
                     pathToAppServiceFolder + File.separator + propertyHttpHolder.getProperty("file.run.service");
-            while (scanner.hasNextLine())
-            {
+            while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 s = replaceScript(s);
                 stringBuilder.append(s);
@@ -250,13 +231,11 @@ public class Installer
             }
             scanner.close();
             textForScript = stringBuilder.toString();
-            if (writeFile())
-            {
+            if (writeFile()) {
                 runScript();
             }
             return true;
-        } catch (FileNotFoundException ex)
-        {
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
@@ -267,8 +246,7 @@ public class Installer
         }
     }
 
-    private String replaceScript(String s)
-    {
+    private String replaceScript(String s) {
         s = s.replace(":NAME_APPLICATION", nameApplication);
         s = s.replace(":PATH_TO_ICO", fullPathToIcon);
         s = s.replace(":PATH_TO_APP_RUN", pathToFileRunAppService);
@@ -279,19 +257,17 @@ public class Installer
     /**
      * Пишем файл со скриптом
      * <p>
+     *
      * @return
      */
-    private boolean writeFile()
-    {
+    private boolean writeFile() {
         Writer out = null;
-        try
-        {
+        try {
             out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileScript), propertyHttpHolder.getProperty("charset.for.write.vbscript.create.link")));
             out.write(textForScript);
             out.flush();
             return true;
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
@@ -299,15 +275,11 @@ public class Installer
                     propertyHttpHolder.getProperty("error.create.script.title"),
                     JOptionPane.INFORMATION_MESSAGE);
             return false;
-        } finally
-        {
-            if (out != null)
-            {
-                try
-                {
+        } finally {
+            if (out != null) {
+                try {
                     out.close();
-                } catch (IOException ex)
-                {
+                } catch (IOException ex) {
                     Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -317,16 +289,14 @@ public class Installer
     /**
      * Запускаем создание ярлыка
      * <p>
+     *
      * @return
      */
-    private boolean runScript()
-    {
-        try
-        {
+    private boolean runScript() {
+        try {
             Desktop.getDesktop().open(fileScript);
             return true;
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
