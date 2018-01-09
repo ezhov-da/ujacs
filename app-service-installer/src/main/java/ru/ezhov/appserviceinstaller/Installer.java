@@ -88,7 +88,7 @@ public class Installer {
             httpFileLoader.load();
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
                     String.format(
@@ -115,7 +115,7 @@ public class Installer {
             fileArchive.delete();
             return true;
         } catch (Exception ex) {
-            Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
                     String.format(propertyHttpHolder.getProperty("error.unzip.file.body") + ": \n" + ex.getMessage(), httpInstallAppServiceLoader),
@@ -174,7 +174,7 @@ public class Installer {
             httpFileLoader.load();
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
                     String.format(propertyHttpHolder.getProperty("error.load.icon.body") + ": \n" + ex.getMessage(), httpFileIconAppService),
@@ -195,7 +195,7 @@ public class Installer {
             httpFileLoader.load();
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
                     String.format(propertyHttpHolder.getProperty("error.load.script.body") + ": \n" + ex.getMessage(), httpFileVBScript),
@@ -236,7 +236,7 @@ public class Installer {
             }
             return true;
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
                     String.format(propertyHttpHolder.getProperty("error.not.found.script.body") + ": \n" + ex.getMessage(), fullPathToScript),
@@ -268,7 +268,7 @@ public class Installer {
             out.flush();
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
                     String.format(propertyHttpHolder.getProperty("error.create.script.body") + ": \n" + ex.getMessage(), fullPathToScript),
@@ -280,7 +280,7 @@ public class Installer {
                 try {
                     out.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -297,7 +297,7 @@ public class Installer {
             Desktop.getDesktop().open(fileScript);
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(AppServiceInstaller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(
                     null,
                     String.format(propertyHttpHolder.getProperty("error.run.script.body") + ": \n" + ex.getMessage(), fullPathToScript),

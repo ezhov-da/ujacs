@@ -3,12 +3,12 @@ package ru.ezhov.server;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import ru.ezhov.ujatools.JOptionPaneError;
 
 /**
  * Сервер обновлений
@@ -44,12 +44,10 @@ public class ServerHolder {
             thread.start();
         } catch (IOException ex) {
             String text = "Не удалось прочитать файл настроек сервера.";
-            LOG.log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, text + "\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPaneError.showErrorMsg(text, ex);
         } catch (NumberFormatException ex) {
-            String text = "Не удалось пропарсить номер порта, проверьте корректность.";
-            LOG.log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, text + "\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            String text = "Не удалось распарсить номер порта, проверьте корректность.";
+            JOptionPaneError.showErrorMsg(text, ex);
         }
     }
 
@@ -60,8 +58,7 @@ public class ServerHolder {
                 LOG.log(Level.INFO, "Сервер остановлен");
             } catch (Exception ex) {
                 String text = "Ошибка остановки сервера";
-                LOG.log(Level.SEVERE, text, ex);
-                JOptionPane.showMessageDialog(null, text + "\n" + ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+                JOptionPaneError.showErrorMsg(text, ex);
             }
         }
     }
@@ -92,7 +89,6 @@ public class ServerHolder {
         return handlers;
     }
 
-
     private class ThreadStartServer implements Runnable {
         private int port;
 
@@ -108,8 +104,7 @@ public class ServerHolder {
                 server.join();
             } catch (Exception e) {
                 String text = "Не удалось запустить сервер.";
-                LOG.log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, text + "\n" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+                JOptionPaneError.showErrorMsg(text, e);
             }
         }
 

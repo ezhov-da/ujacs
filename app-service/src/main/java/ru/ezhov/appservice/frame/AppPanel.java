@@ -14,6 +14,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
 import ru.ezhov.appservice.IconLoader;
@@ -26,10 +27,10 @@ import ru.ezhov.appservice.RunApp;
 /**
  * Панель, которая представляет из себя приложение, то есть вся работа с приложением осуществляется здесь
  * <p>
+ *
  * @author ezhov_da
  */
-public class AppPanel extends JXTaskPane
-{
+public class AppPanel extends JXTaskPane {
     private static final Logger LOG = Logger.getLogger(AppPanel.class.getName());
     private RunApp runApp;
     private ApplicationInstance applicationInstance;
@@ -41,8 +42,7 @@ public class AppPanel extends JXTaskPane
     private JEditorPane textPaneNews;
     private JPanel panelButton;
 
-    public AppPanel(RunApp runApp)
-    {
+    public AppPanel(RunApp runApp) {
         setCollapsed(true);
         this.runApp = runApp;
         this.applicationInstance = runApp.getApplicationInstance();
@@ -59,23 +59,19 @@ public class AppPanel extends JXTaskPane
         registerApp(runApp);
     }
 
-    public void reloadAppPanel(RunApp runApp)
-    {
+    public void reloadAppPanel(RunApp runApp) {
         registerApp(runApp);
     }
 
-    private void registerApp(RunApp runApp)
-    {
+    private void registerApp(RunApp runApp) {
         this.runApp = runApp;
         this.applicationInstance = runApp.getApplicationInstance();
         setTitle(TitleCreator.getTitleApp(applicationInstance) + (runApp.isMustBeUpdate() ? " [Обновление...]" : ""));
         setIconFromUrl();
         setDescriptionAndNews();
-        if (runApp.isRunning())
-        {
+        if (runApp.isRunning()) {
             buttonRun.setAction(new ActionStop(runApp));
-        } else
-        {
+        } else {
             buttonRun.setAction(new ActionRun(runApp));
         }
         buttonInstall.setAction(new ActionInstall(runApp));
@@ -85,86 +81,67 @@ public class AppPanel extends JXTaskPane
         remove(buttonInstall);
         remove(buttonUpdate);
         remove(buttonRemove);
-        try
-        {
+        try {
             fillPanelButton();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(AppPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         revalidate();
     }
 
-    private void setIconFromUrl()
-    {
+    private void setIconFromUrl() {
         String urlIcon = runApp.getApplicationInstance().getHttpIconImage();
-        try
-        {
+        try {
             Icon icon = IconLoader.getIcon(urlIcon);
             setIcon(icon);
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(AppPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void setDescriptionAndNews()
-    {
+    private void setDescriptionAndNews() {
         String description = applicationInstance.getDescription();
         String news = applicationInstance.getListOfChanges();
         setTextPane(textPaneDescription, description, isHttp(description));
         setTextPane(textPaneNews, news, isHttp(news));
     }
 
-    private void init()
-    {
+    private void init() {
         setLayout(new GridBagLayout());
         Insets insets = new Insets(5, 5, 5, 5);
         add(createTabbed(), new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, insets, 0, 0));
         add(panelButton, new GridBagConstraints(0, 1, 1, 1, 1, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, insets, 0, 0));
     }
 
-    private boolean isHttp(String text)
-    {
+    private boolean isHttp(String text) {
         return text.trim().startsWith("http://");
     }
 
 
-    private boolean isHtml(String text)
-    {
+    private boolean isHtml(String text) {
         return text.trim().startsWith("<html>");
     }
 
 
-
-
-    private void setTextPane(JEditorPane editorPane, String text, boolean setPage)
-    {
-        if (setPage)
-        {
-            try
-            {
+    private void setTextPane(JEditorPane editorPane, String text, boolean setPage) {
+        if (setPage) {
+            try {
                 editorPane.setContentType("text/html");
                 editorPane.setPage(text);
-            } catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 Logger.getLogger(AppPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else
-        {
-            if (isHtml(text))
-            {
+        } else {
+            if (isHtml(text)) {
                 editorPane.setContentType("text/html");
-            } else
-            {
+            } else {
                 editorPane.setContentType("text/plain");
             }
             editorPane.setText(text);
         }
     }
 
-    private JXTaskPaneContainer createTabbed()
-    {
+    private JXTaskPaneContainer createTabbed() {
         JXTaskPaneContainer taskPaneContainer = new JXTaskPaneContainer();
         taskPaneContainer.setBackground(new JPanel().getBackground());
         taskPaneContainer.add(createPanelDescription());
@@ -172,42 +149,38 @@ public class AppPanel extends JXTaskPane
         return taskPaneContainer;
     }
 
-    private JXTaskPane createPanelDescription()
-    {
-        JXTaskPane panel = new JXTaskPane("Описание");
+    private JXTaskPane createPanelDescription() {
+        JXTaskPane panel = new JXTaskPane();
+        panel.setTitle("Описание");
         panel.setCollapsed(true);
         panel.setLayout(new BorderLayout());
         panel.add(new JScrollPane(textPaneDescription));
         return panel;
     }
 
-    private JXTaskPane createPanelNews()
-    {
-        JXTaskPane panel = new JXTaskPane("Список изменений");
+    private JXTaskPane createPanelNews() {
+        JXTaskPane panel = new JXTaskPane();
+        panel.setTitle("Список изменений");
         panel.setCollapsed(true);
         panel.setLayout(new BorderLayout());
         panel.add(new JScrollPane(textPaneNews));
         return panel;
     }
 
-    private void fillPanelButton() throws IOException
-    {
+    private void fillPanelButton() throws IOException {
         panelButton.removeAll();
         ActionButtonManager actionButtonManager = new ActionButtonManager(applicationInstance);
         AppButtonAction appButtonAction = actionButtonManager.checkApp();
-        switch (appButtonAction)
-        {
+        switch (appButtonAction) {
             case INSTALL:
                 panelButton.add(buttonInstall);
                 break;
             case UPDATE:
                 //panelButton.add(buttonUpdate);
                 //panelButton.add(buttonRemove); //пока убираем эту кнопку, так как она не нуджна
-                if (!runApp.isRunning())
-                {
+                if (!runApp.isRunning()) {
                     new ActionUpdate(runApp).actionPerformed(null);
-                } else
-                {
+                } else {
                     panelButton.add(buttonRun);
                 }
                 break;

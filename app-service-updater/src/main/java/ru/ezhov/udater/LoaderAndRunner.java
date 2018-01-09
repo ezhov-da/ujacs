@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ru.ezhov.pathtofile.AbsolutePath;
+
+import ru.ezhov.ujatools.AbsolutePath;
 import ru.ezhov.ujatools.LoadHttpProperties;
 import ru.ezhov.ujatools.PropertiesConst;
 import ru.ezhov.ujatools.PropertyHttpHolder;

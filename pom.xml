@@ -10,9 +10,8 @@
         <module>app-server</module>
         <module>app-service</module>
         <module>app-service-installer</module>
-        <module>tools</module>
+        <module>uja-tools</module>
         <module>app-service-updater</module>
-        <module>app-server</module>
     </modules>
     <packaging>pom</packaging>
 

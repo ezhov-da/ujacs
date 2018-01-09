@@ -3,7 +3,7 @@ package ru.ezhov.udater;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ru.ezhov.pathtofile.AbsolutePath;
+import ru.ezhov.ujatools.AbsolutePath;
 import ru.ezhov.ujatools.PropertiesConst;
 import ru.ezhov.ujatools.PropertiesHolder;
 import ru.ezhov.ujatools.PropertyHttpHolder;
