@@ -9,7 +9,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import ru.ezhov.ujatools.AppRussifier;
-import ru.ezhov.ujatools.ControleOneCopyApplication;
+import ru.ezhov.ujatools.OneCopyApplicationControler;
 import ru.ezhov.ujatools.JOptionPaneError;
 import ru.ezhov.ujatools.LoadHttpProperties;
 
@@ -62,7 +62,7 @@ public class UpdaterAppService
 
     private static void checkRunnApp() throws FileNotFoundException
     {
-        ControleOneCopyApplication.check(new File(System.getProperty("user.dir") + File.separator + "UPDATER_LOCK.lock"));
+        OneCopyApplicationControler.check(new File(System.getProperty("user.dir") + File.separator + "UPDATER_LOCK.lock"));
     }
 
     private static void savePID()
