@@ -1,4 +1,4 @@
-package ru.ezhov.udater;
+package ru.ezhov.updater;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

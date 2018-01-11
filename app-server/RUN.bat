@@ -1,2 +1,2 @@
 @echo off
-start "run" "%JAVA_HOME%\bin\javaw.exe" -jar -Xmx768m "%~dp0\server.jar" rem home
+start "run" "%JAVA_HOME%\bin\javaw.exe" -jar -Xmx768m "%~dp0\app-server.jar" rem home

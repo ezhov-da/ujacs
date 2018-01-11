@@ -1,9 +1,9 @@
-package ru.ezhov.udater;
+package ru.ezhov.updater;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingWorker;
-import ru.ezhov.udater.frame.WindowNotify;
+import ru.ezhov.updater.frame.WindowNotify;
 import ru.ezhov.ujatools.JOptionPaneError;
 
 /**

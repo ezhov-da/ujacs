@@ -11,9 +11,7 @@
 package ru.ezhov.appserviceinstaller;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import ru.ezhov.appserviceinstaller.src.BasicFrame;
@@ -27,8 +25,8 @@ import ru.ezhov.ujatools.LoadHttpProperties;
  *
  * @author ezhov_da
  */
-public class App {
-    private static final Logger LOG = Logger.getLogger(App.class.getName());
+public class AppServiceInstaller {
+    private static final Logger LOG = Logger.getLogger(AppServiceInstaller.class.getName());
 
     public static void main(String[] args) {
         try {

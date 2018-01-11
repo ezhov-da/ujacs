@@ -3,3 +3,7 @@ target
 .idea
 *.log
 app-server/server
+server/
+*.log.*
+*.lock
+*.jar

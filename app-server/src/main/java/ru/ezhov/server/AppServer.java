@@ -9,17 +9,17 @@ import javax.swing.*;
 
 import ru.ezhov.server.gui.BasicFrame;
 
-public class App {
-    private static final Logger LOG = Logger.getLogger(App.class.getName());
+public class AppServer {
+    private static final Logger LOG = Logger.getLogger(AppServer.class.getName());
 
     public static void main(String[] args) {
-        App app = new App();
+        AppServer appServer = new AppServer();
         try {
-            app.installLogManager();
+            appServer.installLogManager();
             LOG.log(Level.INFO, "Application server started with PID: {0}", Kernel32.INSTANCE.GetCurrentProcessId());
-            app.unpackResources();
-            app.addHooks();
-            app.showFrame();
+            appServer.unpackResources();
+            appServer.addHooks();
+            appServer.showFrame();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ошибка распаковки ресурсов", e);
             JOptionPane.showMessageDialog(
@@ -33,7 +33,7 @@ public class App {
 
     private void installLogManager() {
         try {
-            LogManager.getLogManager().readConfiguration(App.class.getResourceAsStream("/log.properties"));
+            LogManager.getLogManager().readConfiguration(AppServer.class.getResourceAsStream("/log.properties"));
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, null, ex);
         }

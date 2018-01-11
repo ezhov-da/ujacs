@@ -1,7 +1,7 @@
-package ru.ezhov.udater;
+package ru.ezhov.updater;
 
-import ru.ezhov.udater.frame.WindowUpdate;
-import java.awt.Color;
+import ru.ezhov.updater.frame.WindowUpdate;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

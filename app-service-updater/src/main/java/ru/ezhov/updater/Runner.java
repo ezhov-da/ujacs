@@ -1,4 +1,4 @@
-package ru.ezhov.udater;
+package ru.ezhov.updater;
 
 import java.io.IOException;
 import java.util.logging.Level;

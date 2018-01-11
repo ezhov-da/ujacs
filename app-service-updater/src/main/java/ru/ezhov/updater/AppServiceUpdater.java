@@ -1,4 +1,4 @@
-package ru.ezhov.udater;
+package ru.ezhov.updater;
 
 import com.sun.jna.platform.win32.Kernel32;
 
@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import ru.ezhov.ujatools.AppRussifier;
-import ru.ezhov.ujatools.ControleOneCopyApplication;
+import ru.ezhov.ujatools.OneCopyApplicationControler;
 import ru.ezhov.ujatools.JOptionPaneError;
 import ru.ezhov.ujatools.LoadHttpProperties;
 
 /**
- * Это приложение используется как запускатор для сервиса приложений и именно он отвечает за
+ * Это приложение используется как запускатор для сервиса приложений и именно оно отвечает за
  * его обновление
  * <p>
  *
@@ -25,10 +25,10 @@ import ru.ezhov.ujatools.LoadHttpProperties;
 public class AppServiceUpdater {
     private static final Logger LOG = Logger.getLogger(AppServiceUpdater.class.getName());
 
-    {
+    public static void main(String[] args) {
         loadLogManager();
         try {
-            checkRunnApp();
+            checkRunApp();
             savePID();
             AppRussifier.runRussifier();
             addHook();
@@ -46,14 +46,14 @@ public class AppServiceUpdater {
 
     private static void loadLogManager() {
         try {
-            LogManager.getLogManager().readConfiguration(AppServiceUpdater.class.getResourceAsStream("log.properties"));
+            LogManager.getLogManager().readConfiguration(AppServiceUpdater.class.getResourceAsStream("/log.properties"));
         } catch (Exception ex) {
             Logger.getLogger(AppServiceUpdater.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private static void checkRunnApp() throws FileNotFoundException {
-        ControleOneCopyApplication.check(new File(System.getProperty("user.dir") + File.separator + "UPDATER_LOCK.lock"));
+    private static void checkRunApp() throws FileNotFoundException {
+        OneCopyApplicationControler.check(new File(System.getProperty("user.dir") + File.separator + "UPDATER_LOCK.lock"));
     }
 
     private static void savePID() {

@@ -19,11 +19,11 @@ public class LoadHttpProperties
         try
         {
             propertiesHolder.loadPropertyClass(LoadHttpProperties.class);
-            String httpPtoperties = propertiesHolder.getProperty(PropertiesConst.INSTALLER_FILE_APP_PROPERTY_HTTP);
+            String httpProperties = propertiesHolder.getProperty(PropertiesConst.INSTALLER_FILE_APP_PROPERTY_HTTP);
             PropertyHttpHolder propertyHttpHolder = PropertyHttpHolder.getInstance();
             try
             {
-                propertyHttpHolder.load(httpPtoperties);
+                propertyHttpHolder.load(httpProperties);
             } catch (IOException ex)
             {
                 Logger.getLogger(LoadHttpProperties.class.getName()).log(Level.SEVERE, null, ex);

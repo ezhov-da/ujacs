@@ -8,13 +8,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import ru.ezhov.appservice.frame.BasicFrame;
 import ru.ezhov.appservice.tray.AppTray;
 import ru.ezhov.ujatools.AppRussifier;
-import ru.ezhov.ujatools.xmlobjects.RunnerApp;
 
 /**
  * ВАЖНО! Нужно понимать, что вся работа с внешними приложениями осуществляется
@@ -23,8 +21,8 @@ import ru.ezhov.ujatools.xmlobjects.RunnerApp;
  *
  * @author ezhov_da
  */
-public class App {
-    private static final Logger LOG = Logger.getLogger(App.class.getName());
+public class AppService {
+    private static final Logger LOG = Logger.getLogger(AppService.class.getName());
 
     /**
      * @param args the command line arguments
@@ -66,7 +64,7 @@ public class App {
             LogManager
                     .getLogManager()
                     .readConfiguration(
-                            App.class.getResourceAsStream("/log.properties")
+                            AppService.class.getResourceAsStream("/log.properties")
                     );
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, null, ex);

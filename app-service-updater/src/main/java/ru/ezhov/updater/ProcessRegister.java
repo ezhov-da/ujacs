@@ -1,8 +1,7 @@
-package ru.ezhov.udater;
+package ru.ezhov.updater;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 /**

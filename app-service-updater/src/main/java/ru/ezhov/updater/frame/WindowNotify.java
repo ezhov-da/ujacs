@@ -1,12 +1,9 @@
-package ru.ezhov.udater.frame;
+package ru.ezhov.updater.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,18 +17,16 @@ import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import ru.ezhov.ujatools.DimensionProperties;
-import ru.ezhov.ujatools.LoadHttpProperties;
-import ru.ezhov.ujatools.PropertiesConst;
-import ru.ezhov.ujatools.PropertyHttpHolder;
+
+import ru.ezhov.ujatools.*;
 
 /**
  * Окно, которое показывается при запуске, обновлении и установке сервиса приложений
  * <p>
+ *
  * @author ezhov_da
  */
-public class WindowNotify extends JWindow
-{
+public class WindowNotify extends JWindow {
     private static final Logger LOG = Logger.getLogger(WindowNotify.class.getName());
     private static WindowNotify windowNotify;
     private JLabel labelInfo;
@@ -41,17 +36,14 @@ public class WindowNotify extends JWindow
     private Image imageBackGroundPanel;
     private JPanel panel;
 
-    public static WindowNotify getInstance()
-    {
-        if (windowNotify == null)
-        {
+    public static WindowNotify getInstance() {
+        if (windowNotify == null) {
             windowNotify = new WindowNotify();
         }
         return windowNotify;
     }
 
-    public WindowNotify()
-    {
+    public WindowNotify() {
         labelInfo = new JLabel();
         labelInfo.setHorizontalAlignment(SwingConstants.CENTER);
         labelLoad = new JLabel();
@@ -61,16 +53,12 @@ public class WindowNotify extends JWindow
         setAlwaysOnTop(true);
     }
 
-    private void createPanel()
-    {
-        panel = new JPanel()
-        {
+    private void createPanel() {
+        panel = new JPanel() {
             @Override
-            protected void paintComponent(Graphics g)
-            {
+            protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                if (imageBackGroundPanel != null)
-                {
+                if (imageBackGroundPanel != null) {
                     g.drawImage(imageBackGroundPanel, 0, 0, null);
                 }
             }
@@ -80,34 +68,28 @@ public class WindowNotify extends JWindow
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
-    public void loadInfo()
-    {
+    public void loadInfo() {
         PropertyHttpHolder propertyHttpHolder = PropertyHttpHolder.getInstance();
         textShow = propertyHttpHolder.getProperty(PropertiesConst.TEXT_LOADER_APP_SERVICE);
         labelInfo.setText(textShow);
-        try
-        {
+        try {
+            //TODO: не найдены настройки, разобраться
             iconLoader = new ImageIcon(new URL(propertyHttpHolder.getProperty(PropertiesConst.HTTP_FILE_ICON_APP_SERVICE_LOADER)));
             labelLoad.setIcon(iconLoader);
-        } catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
             LOG.log(Level.WARNING, "Не найдена иконка загрузки", ex);
         }
-        try
-        {
+        try {
             imageBackGroundPanel = new ImageIcon(new URL(propertyHttpHolder.getProperty(PropertiesConst.HTTP_FILE_ICON_APP_SERVICE_BACKGROUND_LOADER))).getImage();
-        } catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
             LOG.log(Level.SEVERE, "Не найден фон загрузчика", ex);
         }
         setSize(DimensionProperties.getDimension(propertyHttpHolder.getProperty(PropertiesConst.SIZE_LOADER_WINDOW)));
     }
 
     @Override
-    public void setVisible(boolean b)
-    {
-        if (b)
-        {
+    public void setVisible(boolean b) {
+        if (b) {
             loadInfo();
             setLocationRelativeTo(null);
             panel.revalidate();
@@ -115,25 +97,18 @@ public class WindowNotify extends JWindow
         super.setVisible(b);
     }
 
-
-    public static void main(String[] args)
-    {
-        try
-        {
+    //Тестовый метод
+    public static void main(String[] args) {
+        try {
             new LoadHttpProperties().load();
-            SwingUtilities.invokeLater(new Runnable()
-            {
+            SwingUtilities.invokeLater(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     WindowNotify.getInstance().setVisible(true);
                 }
             });
-        } catch (IOException ex)
-        {
-            Logger.getLogger(WindowNotify.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            JOptionPaneError.showErrorMsg("Ошибка загрузки файла настроек", ex);
         }
     }
-
-
 }

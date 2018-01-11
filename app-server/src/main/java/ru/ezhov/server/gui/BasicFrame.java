@@ -29,6 +29,7 @@ public class BasicFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setTitle(title);
+        setIconImage(new ImageIcon(BasicFrame.class.getResource("/server-icon.png")).getImage());
         pack();
         LocatedComponent.locatedInTheCorner(this);
     }

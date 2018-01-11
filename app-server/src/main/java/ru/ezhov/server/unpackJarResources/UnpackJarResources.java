@@ -6,8 +6,12 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UnpackJarResources {
+    private static final Logger LOG = Logger.getLogger(UnpackJarResources.class.getName());
+
     private InputStream inputStreamFileXml;
     private String pathRootCreateFolders;
 
@@ -19,9 +23,11 @@ public class UnpackJarResources {
     }
 
     public void createAndCopy() throws IOException {
+        LOG.info("Begin unpack server resources");
         Directory directory =
                 JAXB.unmarshal(inputStreamFileXml, Directory.class);
         recursiveProcess(directory, pathRootCreateFolders, "");
+        LOG.info("Server resources unpacked");
     }
 
     private void recursiveProcess(Directory directory, String pathTo, String pathFrom) throws IOException {
@@ -34,8 +40,6 @@ public class UnpackJarResources {
 
         String pathToFull = pathTo + "/" + directory.getName();
 
-        System.out.println(pathFromFull);
-        System.out.println(pathToFull);
         createFolder(pathToFull);
 
         List<Directory> directories = directory.getDirectories();
@@ -45,7 +49,6 @@ public class UnpackJarResources {
 
         List<File> files = directory.getFiles();
         for (File file : files) {
-            System.out.println("File: " + file.getName());
             copyFile(
                     pathFromFull + "/" + file.getName(),
                     pathToFull + "/" + file.getName()
@@ -57,12 +60,14 @@ public class UnpackJarResources {
         java.io.File file = new java.io.File(pathCreateFolder);
         if (!file.exists()) {
             file.mkdirs();
+            LOG.log(Level.CONFIG, "Create folder [{0}]", pathCreateFolder);
         }
     }
 
     private void copyFile(String pathFromFile, String pathToFile) throws IOException {
         java.io.File file = new java.io.File(pathToFile);
         if (!file.exists()) {
+            LOG.log(Level.CONFIG, "Copy file from [{0}] to [{1}]", new Object[]{pathFromFile, pathToFile});
             Files.copy(
                     getClass().getResourceAsStream(pathFromFile),
                     file.toPath(),

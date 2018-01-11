@@ -1,4 +1,4 @@
-package ru.ezhov.udater.frame;
+package ru.ezhov.updater.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,7 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
-import ru.ezhov.udater.ProcessRegister;
+
+import ru.ezhov.updater.ProcessRegister;
 import ru.ezhov.ujatools.JOptionPaneError;
 import ru.ezhov.ujatools.LocatedComponent;
 import ru.ezhov.ujatools.PropertyHttpHolder;
@@ -19,18 +20,17 @@ import ru.ezhov.ujatools.PropertyHttpHolder;
 /**
  * Окно для отображения сообщения об обновлении приложения
  * <p>
+ *
  * @author ezhov_da
  */
-public class WindowUpdate extends JWindow
-{
+public class WindowUpdate extends JWindow {
     private static final Logger LOG = Logger.getLogger(WindowUpdate.class.getName());
     private static WindowUpdate windowUpdate;
     private JButton buttonYes;
     private JButton buttonNo;
     private JLabel label;
 
-    public WindowUpdate()
-    {
+    public WindowUpdate() {
         buttonYes = new JButton("Да");
         buttonNo = new JButton("Нет");
         label = new JLabel();
@@ -39,59 +39,47 @@ public class WindowUpdate extends JWindow
         initListeners();
     }
 
-    private void initListeners()
-    {
-        buttonYes.addActionListener(new ActionListener()
-        {
+    private void initListeners() {
+        buttonYes.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 LOG.log(Level.INFO, "Пользователь нажал да");
-                try
-                {
+                try {
                     LOG.log(Level.INFO, "Прячем форму");
                     setVisible(false);
                     LOG.log(Level.INFO, "Запускаем закрытие сокета");
                     updateApp();
-                } catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     String error = "Ошибка обновления";
                     Logger.getLogger(WindowUpdate.class.getName()).log(Level.SEVERE, error, ex);
                     JOptionPaneError.showErrorMsg(error, ex);
                 }
             }
         });
-        buttonNo.addActionListener(new ActionListener()
-        {
+        buttonNo.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 setVisible(false);
             }
         });
     }
 
-    public static synchronized WindowUpdate getInstance()
-    {
-        if (windowUpdate == null)
-        {
+    public static synchronized WindowUpdate getInstance() {
+        if (windowUpdate == null) {
             windowUpdate = new WindowUpdate();
         }
         return windowUpdate;
     }
 
     @Override
-    public void setVisible(boolean b)
-    {
-        if (b)
-        {
+    public void setVisible(boolean b) {
+        if (b) {
             init();
         }
         super.setVisible(b);
     }
 
-    private void init()
-    {
+    private void init() {
         LOG.info("Показываем окно уведомление об обновлении");
         PropertyHttpHolder propertyHttpHolder = PropertyHttpHolder.getInstance();
         label.setText(propertyHttpHolder.getProperty("message.update.service.app.body"));
@@ -100,17 +88,14 @@ public class WindowUpdate extends JWindow
         LocatedComponent.locatedInTheCorner(this);
     }
 
-    private void updateApp() throws Exception
-    {
+    private void updateApp() throws Exception {
         LOG.log(Level.INFO, "Пользователь захотел обновить приложение");
         ProcessRegister.getInstance().destroyProcess();
     }
 
-    private class PanelBasic extends JPanel
-    {
+    private class PanelBasic extends JPanel {
 
-        public PanelBasic()
-        {
+        public PanelBasic() {
             super(new BorderLayout());
             add(label, BorderLayout.CENTER);
             JPanel panel = new JPanel();

@@ -19,7 +19,7 @@ public class PropertiesHolder {
 
     private PropertiesHolder() throws IOException {
         properties = new Properties();
-        properties.load(new FileReader("config.properties"));
+        properties.load(new FileReader("./server/config.properties"));
     }
 
     public static PropertiesHolder getInstance() throws IOException {
