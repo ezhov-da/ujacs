@@ -3,17 +3,17 @@
     <applicationInstances>
         <applicationInstance>
             <nameAppUser>
-                <![CDATA[<html><b>Тестовое приложение для массовки</b> v.%s]]>
+                <![CDATA[<html><b>Тестовое консольное приложение</b> v.%s]]>
             </nameAppUser>
-            <nameAppSystem>test</nameAppSystem>
+            <nameAppSystem>app-test-console</nameAppSystem>
             <version>0.4</version>
-            <fileZip>renamer.zip</fileZip>
+            <fileZip>app-test-console.zip</fileZip>
             <httpLoad>http://localhost:9090/apps/</httpLoad>
             <commandRunApp>
-                <![CDATA["${JAVA_HOME}\bin\javaw" -Xmx768m -jar "${PATH_TO_APP}\renamer.jar"]]>
+                <![CDATA["${JAVA_HOME}\bin\javaw" -Xmx768m -jar "${PATH_TO_APP}\app-test-console.jar"]]>
             </commandRunApp>
             <news>
-                <![CDATA[<html>Добавлено что то]]>
+                <![CDATA[<html>Хей, это первая версия ))]]>
             </news>
             <httpIconImage>
                 http://localhost:9090/icon/default_16x16.png
@@ -22,15 +22,15 @@
                 <![CDATA[<html>
                 <b>
                 09.08.2016:
-                Реализован модуль переноса задач
+                Что то сделано
                 </b>
                 ]]>
             </listOfChanges>
             <listUsersGood>
-                <string>ezhov_da</string>
+                <string>*</string>
             </listUsersGood>
             <listUsersBad>
-                <string>ezhov_da</string>
+                <string/>
             </listUsersBad>
             <description>
                 <![CDATA[<html>
@@ -45,15 +45,15 @@
             <nameAppUser>
                 <![CDATA[<html><b>тестовый ппз</b> v.%s]]>
             </nameAppUser>
-            <nameAppSystem>spt</nameAppSystem>
+            <nameAppSystem>app-test-gui</nameAppSystem>
             <version>0.4</version>
-            <fileZip>spt.zip</fileZip>
+            <fileZip>app-test-gui.zip</fileZip>
             <httpLoad>http://localhost:9090/apps/</httpLoad>
             <commandRunApp>
-                <![CDATA["${JAVA_HOME}\bin\javaw" -Xmx768m -jar "${PATH_TO_APP}\scheduler_production_tasks.jar"]]>
+                <![CDATA["${JAVA_HOME}\bin\javaw" -Xmx768m -jar "${PATH_TO_APP}\app-test-gui.jar"]]>
             </commandRunApp>
             <news>
-                <![CDATA[<html>Добавлено что то]]>
+                <![CDATA[<html>Обновлено :)]]>
             </news>
             <httpIconImage>
                 http://localhost:9090/icon/spt_16x16.png
@@ -62,15 +62,15 @@
                 <![CDATA[<html>
                 <b>
                 09.08.2016:
-                Реализован модуль переноса задач
+                Что то сделано
                 </b>
                 ]]>
             </listOfChanges>
             <listUsersGood>
-                <string>ezhov_da</string>
+                <string>*</string>
             </listUsersGood>
             <listUsersBad>
-                <string>ezhov_da</string>
+                <string/>
             </listUsersBad>
             <description>
                 <![CDATA[<html>

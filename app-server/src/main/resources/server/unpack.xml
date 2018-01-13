@@ -47,7 +47,6 @@
         </dir>
     </dirs>
     <files>
-        <file name="apps.xml"/>
         <file name="config.properties"/>
     </files>
 </directory>

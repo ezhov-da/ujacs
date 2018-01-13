@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
     <parent>
         <artifactId>ujacs</artifactId>
         <groupId>ru.ezhov</groupId>
@@ -73,6 +73,35 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <tasks>
+                                <!--Копируем *.bat файлы в target-->
+                                <copy todir="${project.build.directory}">
+                                    <fileset dir="${project.basedir}">
+                                        <include name="*.bat"/>
+                                    </fileset>
+                                </copy>
+
+                                <!--Создаем архив с готовым сервером-->
+                                <zip destfile="${project.build.directory}/${artifactId}.zip"
+                                     basedir="${project.build.directory}"
+                                     includes="*.bat, ${artifactId}.jar"
+                                />
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

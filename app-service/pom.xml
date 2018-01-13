@@ -11,20 +11,25 @@
 
     <artifactId>app-service</artifactId>
     <packaging>jar</packaging>
+    <version>0.1</version>
 
     <name>app-service</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class>ru.ezhov.appservice.AppService</main.class>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.file>config.properties</version.file>
+        <app.const.version.file>app.version</app.const.version.file>
+        <name.zip>${project.artifactId}_${project.version}.zip</name.zip>
+        <folder.application.dist>dist</folder.application.dist>
+        <full.name.jar.without.version>${project.artifactId}.${project.packaging}</full.name.jar.without.version>
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>uja-tools</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
@@ -51,7 +56,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -78,6 +82,52 @@
                         <phase>package</phase> <!-- bind to the packaging phase -->
                         <goals>
                             <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>copy-write-cmd</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <!--===========================================================
+                                СОБИРАЕМ ПРОЕКТ В АРХИВ ДЛЯ РАЗВЕРТЫВАНИЯ НА СЕРВЕРЕ ПРИЛОЖЕНИЙ
+                                ============================================================-->
+
+                                <!-- Создаем файл с версией-->
+                                <echo file="${project.build.directory}/${folder.application.dist}/${version.file}"
+                                      append="true">
+                                    <![CDATA[
+                                ${app.const.version.file}=${project.version}
+                                ]]>
+                                </echo>
+
+                                <!--Создаем bat для запуска-->
+                                <echo file="${project.build.directory}/${folder.application.dist}/run.bat"
+                                      append="true">
+                                    <![CDATA[
+                                cd /d %~dp0 && start "run" "%JAVA_HOME%\bin\java" -jar -Xmx768m "%~dp0\${full.name.jar.without.version}" rem home
+                                ]]>
+                                </echo>
+
+                                <!--Копируем jar файл в директорию для сборки-->
+                                <copy file="${project.build.directory}/${full.name.jar.without.version}"
+                                      tofile="${project.build.directory}/${folder.application.dist}/${full.name.jar.without.version}"/>
+
+                                <mkdir dir="${project.build.directory}/${folder.application.dist}/java"/>
+
+                                <!--пакуем в архив-->
+                                <zip destfile="${project.build.directory}/${name.zip}"
+                                     basedir="${project.build.directory}/${folder.application.dist}"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>
