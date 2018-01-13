@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <main.class>ru.ezhov.updater.AppUpdater</main.class>
+        <main.class>ru.ezhov.updater.AppServiceUpdater</main.class>
     </properties>
 
     <dependencies>
@@ -40,7 +40,7 @@
     </dependencies>
 
     <build>
-        <finalName>app-service-installer</finalName>
+        <finalName>app-service-updater</finalName>
 
         <plugins>
             <plugin>

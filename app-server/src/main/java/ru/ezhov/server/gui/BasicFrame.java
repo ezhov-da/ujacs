@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-import ru.ezhov.server.ServerHolder;
-import ru.ezhov.server.TitleHolder;
+import ru.ezhov.server.common.ServerHolder;
+import ru.ezhov.server.common.TitleHolder;
 
 public class BasicFrame extends JFrame {
     private static final Logger LOG = Logger.getLogger(BasicFrame.class.getName());
@@ -41,7 +41,7 @@ public class BasicFrame extends JFrame {
                 String text = startServer ? STOP_SERVER_TEXT : START_SERVER_TEXT;
                 button.setText(text);
                 if (startServer) {
-                    ServerHolder.getInstance().startServer();
+                    ServerHolder.getInstance().startServer(true);
                 } else {
                     ServerHolder.getInstance().stopServer();
                 }
