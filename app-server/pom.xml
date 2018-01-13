@@ -48,7 +48,6 @@
     <build>
         <plugins>
             <!--http://maven.apache.org/plugins/maven-assembly-plugin/usage.html-->
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.0</version>
@@ -81,9 +80,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <compilerArguments>
-                        <bootclasspath>${sun.boot.class.path}${path.separator}${java.home}/lib/jfxrt.jar</bootclasspath>
-                    </compilerArguments>
                 </configuration>
             </plugin>
         </plugins>

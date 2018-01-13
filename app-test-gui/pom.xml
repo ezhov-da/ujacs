@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ujacs</artifactId>
+        <groupId>ru.ezhov</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>app-test-gui</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1</version>
+
+    <name>app-test-gui</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+
+        <directory.extended.dll>dll</directory.extended.dll>
+        <directory.jdbc.jars>jdbc_jars</directory.jdbc.jars>
+        <directory.jars>lib</directory.jars>
+
+        <version.file>config.properties</version.file>
+        <app.const.version.file>app.version</app.const.version.file>
+        <name.zip>${project.artifactId}_${project.version}.zip</name.zip>
+        <folder.application.dist>dist</folder.application.dist>
+        <full.name.jar.with.version>
+            ${project.artifactId}-${project.version}.${project.packaging}
+        </full.name.jar.with.version>
+        <full.name.jar.without.version>${project.artifactId}.${project.packaging}</full.name.jar.without.version>
+    </properties>
+
+    <dependencies>
+        <!--Только для теста, чтоб показать как происходит сборка с зависимостями-->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${directory.jars}/</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>ru.ezhov.apptestgui.App</mainClass>
+                            <classpathPrefix>${directory.jars}/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>copy-write-cmd</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+
+                                <!--===========================================================
+                                СОБИРАЕМ ПРОЕКТ В АРХИВ ДЛЯ РАЗВЕРТЫВАНИЯ НА СЕРВЕРЕ ПРИЛОЖЕНИЙ
+                                ============================================================-->
+
+                                <!-- Создаем файл с версией-->
+                                <echo file="${project.build.directory}/${folder.application.dist}/${version.file}"
+                                      append="true">
+                                    <![CDATA[
+                                ${app.const.version.file}=${project.version}
+                                ]]>
+                                </echo>
+
+                                <!--Создаем bat для запуска-->
+                                <echo file="${project.build.directory}/${folder.application.dist}/run.bat"
+                                      append="true">
+                                    <![CDATA[
+                                cd /d %~dp0 && start "run" "%JAVA_HOME%\bin\javaw" -jar -Xmx768m "%~dp0\${full.name.jar.without.version}" rem home
+                                ]]>
+                                </echo>
+
+                                <!--Копируем дополнительные папки в dist-->
+                                <copy todir="${project.build.directory}/${folder.application.dist}/${directory.extended.dll}">
+                                    <fileset dir="${directory.extended.dll}"/>
+                                </copy>
+
+                                <copy todir="${project.build.directory}/${folder.application.dist}/${directory.jdbc.jars}">
+                                    <fileset dir="${directory.jdbc.jars}"/>
+                                </copy>
+
+                                <copy todir="${project.build.directory}/${folder.application.dist}/${directory.jars}">
+                                    <fileset dir="${project.build.directory}/${directory.jars}"/>
+                                </copy>
+
+                                <!--Копируем jar файл в директорию для сборки-->
+                                <copy file="${project.build.directory}/${full.name.jar.with.version}"
+                                      tofile="${project.build.directory}/${folder.application.dist}/${full.name.jar.without.version}"/>
+
+                                <!--пакуем в архив-->
+                                <zip destfile="${project.build.directory}/${name.zip}"
+                                     basedir="${project.build.directory}/${folder.application.dist}"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

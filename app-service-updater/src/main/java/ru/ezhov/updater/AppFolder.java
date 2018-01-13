@@ -12,15 +12,15 @@ import ru.ezhov.ujatools.PropertyHttpHolder;
  * <p>
  * @author ezhov_da
  */
-public class CheckFolder
+public class AppFolder
 {
-    private static final Logger LOG = Logger.getLogger(CheckFolder.class.getName());
+    private static final Logger LOG = Logger.getLogger(AppFolder.class.getName());
 
-    public boolean isFolderAppCreate() throws Exception
+    public File constructPathToAppFolder() throws Exception
     {
         PropertyHttpHolder propertyHttpHolder = PropertyHttpHolder.getInstance();
         String folder = propertyHttpHolder.getProperty(PropertiesConst.NAME_FOLDER_APP_SERVICE_REAL);
-        String pasthToFolderApp = AbsolutePath.getAbsolutePath(CheckFolder.class) + File.separator + folder;
-        return new File(pasthToFolderApp).exists();
+        String pathToFolderApp = AbsolutePath.getAbsolutePath(AppFolder.class) + File.separator + folder;
+        return new File(pathToFolderApp);
     }
 }

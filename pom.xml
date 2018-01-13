@@ -9,11 +9,14 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>app-test-gui</module>
+        <module>app-test-console</module>
+
         <module>uja-tools</module>
-        <module>app-server</module>
         <module>app-service</module>
         <module>app-service-installer</module>
         <module>app-service-updater</module>
+        <module>app-server</module>
     </modules>
 
     <name>ujacs</name>

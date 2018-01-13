@@ -49,7 +49,7 @@ public class TaskCheckUpdate extends Thread
                 Thread.sleep(time);
             } catch (InterruptedException ex)
             {
-                Logger.getLogger(TaskCheckUpdate.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.log(Level.SEVERE, null, ex);
             }
         }
     }

@@ -37,7 +37,12 @@ public class RunSaveApp {
                 }
             }
             if (set.size() > 0) {
-                int q = JOptionPane.showConfirmDialog(null, getTextQuestion(set), "Запуск приложений", JOptionPane.YES_NO_OPTION);
+                int q = JOptionPane.showConfirmDialog(
+                        null,
+                        getTextQuestion(set),
+                        "Запуск приложений",
+                        JOptionPane.YES_NO_OPTION
+                );
                 if (q == JOptionPane.YES_OPTION) {
                     runApp();
                 }

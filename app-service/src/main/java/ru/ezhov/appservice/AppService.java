@@ -86,10 +86,12 @@ public class AppService {
                 try {
                     socketConnector.connect();
                 } catch (IOException ex) {
-                    String text = "Ошибка подключения сокета";
-                    LOG.log(Level.SEVERE, text, ex);
+                    String text =
+                            "Важно! \n" +
+                                    "Приложение запущено вне режима обновления, " +
+                                    "в данном режиме обновление приложения недоступно.\n\n" +
+                                    "Ошибка подключения сокета";
                     JOptionPaneError.showErrorMsg(text, ex);
-                    System.exit(-1000);
                 }
             }
         };

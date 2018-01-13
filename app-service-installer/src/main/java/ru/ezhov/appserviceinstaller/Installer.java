@@ -41,13 +41,16 @@ public class Installer {
      */
     public void install() {
         propertyHttpHolder = PropertyHttpHolder.getInstance();
-        initVarible();
+        initVariable();
         if (!folderToFile.canExecute()) {
             installService();
         } else {
             JOptionPane.showMessageDialog(
                     null,
-                    String.format(propertyHttpHolder.getProperty("error.app.already.install.body"), folderToFile.getAbsolutePath()),
+                    String.format(
+                            propertyHttpHolder.getProperty("error.app.already.install.body"),
+                            folderToFile.getAbsolutePath()
+                    ),
                     propertyHttpHolder.getProperty("error.app.already.install.title"),
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -56,7 +59,7 @@ public class Installer {
     /**
      * Инициализируем переменные
      */
-    private void initVarible() {
+    private void initVariable() {
         httpInstallAppServiceLoader = propertyHttpHolder.getProperty("http.install.app.service.loader");
         pathToAppServiceFolder = directoryForInstall.getAbsolutePath() + File.separator + propertyHttpHolder.getProperty("name.folder.app.service");
         folderToFile = new File(pathToAppServiceFolder);
