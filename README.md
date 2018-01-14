@@ -19,8 +19,11 @@
         * lib
         * bin
 1. Архив: **ujacs/app-service/target/app-service_0.1.zip** скопировать в папку **SERVER_DIR/server/install/install_service_app/**
+1. Скопируйте архив: **ujacs/app-service-updater/target/app_service_installer.zip** в папку **SERVER_DIR/server/install/first_install/**
+1. Запустите сервер в консольном режиме используя .bat: **run-console.bat**        
 
 
+1. Для установки пользовательского приложения запустите **ujacs/app-service-installer/target/app-service-installer.jar**  
 
 
 

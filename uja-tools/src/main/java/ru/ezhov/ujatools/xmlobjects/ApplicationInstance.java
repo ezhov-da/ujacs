@@ -26,27 +26,27 @@ public class ApplicationInstance {
     }
 
     public String getNameAppUser() {
-        return nameAppUser;
+        return nameAppUser.trim();
     }
 
     public String getNameAppSystem() {
-        return nameAppSystem;
+        return nameAppSystem.trim();
     }
 
     public String getVersion() {
-        return version;
+        return version.trim();
     }
 
     public String getFileZip() {
-        return fileZip + "_" + version + ".zip";
+        return fileZip.trim() + "_" + version.trim() + ".zip";
     }
 
     public String getHttpLoad() {
-        return httpLoad;
+        return httpLoad.trim();
     }
 
     public String getListOfChanges() {
-        return listOfChanges;
+        return listOfChanges.trim();
     }
 
     public List<String> getListUsersGood() {
@@ -58,19 +58,19 @@ public class ApplicationInstance {
     }
 
     public String getDescription() {
-        return description;
+        return description.trim();
     }
 
     public String getNews() {
-        return news;
+        return news.trim();
     }
 
     public String getCommandRunApp() {
-        return commandRunApp;
+        return commandRunApp.trim();
     }
 
     public String getHttpIconImage() {
-        return httpIconImage;
+        return httpIconImage.trim();
     }
 
     public void setNameAppUser(String nameAppUser) {

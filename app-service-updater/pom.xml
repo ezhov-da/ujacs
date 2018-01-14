@@ -17,6 +17,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class>ru.ezhov.updater.AppServiceUpdater</main.class>
+        <name.archive>app_service_installer.zip</name.archive>
     </properties>
 
     <dependencies>
@@ -63,6 +64,25 @@
                         <phase>package</phase> <!-- bind to the packaging phase -->
                         <goals>
                             <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <tasks>
+                                <zip destfile="${project.build.directory}/${name.archive}"
+                                     basedir="${project.build.directory}"
+                                     includes="${artifactId}.jar"
+                                />
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>

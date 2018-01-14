@@ -6,11 +6,11 @@
                 <![CDATA[<html><b>Тестовое консольное приложение</b> v.%s]]>
             </nameAppUser>
             <nameAppSystem>app-test-console</nameAppSystem>
-            <version>0.4</version>
+            <version>0.1</version>
             <fileZip>app-test-console.zip</fileZip>
             <httpLoad>http://localhost:9090/apps/</httpLoad>
             <commandRunApp>
-                <![CDATA["${JAVA_HOME}\bin\javaw" -Xmx768m -jar "${PATH_TO_APP}\app-test-console.jar"]]>
+                <![CDATA["${JAVA_HOME}\bin\java" -Xmx768m -jar "${PATH_TO_APP}\app-test-console.jar"]]>
             </commandRunApp>
             <news>
                 <![CDATA[<html>Хей, это первая версия ))]]>
@@ -21,7 +21,6 @@
             <listOfChanges>
                 <![CDATA[<html>
                 <b>
-                09.08.2016:
                 Что то сделано
                 </b>
                 ]]>
@@ -35,18 +34,18 @@
             <description>
                 <![CDATA[<html>
                 <p>
-                  Просто тест
-                </p>                                                                                                
+                    Тестовое консольное приложение не несущее смысловой нагрузки
+                </p>
                 ]]>
             </description>
         </applicationInstance>
 
         <applicationInstance>
             <nameAppUser>
-                <![CDATA[<html><b>тестовый ппз</b> v.%s]]>
+                <![CDATA[<html><b>Тестовое GUI приложение</b> v.%s]]>
             </nameAppUser>
             <nameAppSystem>app-test-gui</nameAppSystem>
-            <version>0.4</version>
+            <version>0.1</version>
             <fileZip>app-test-gui.zip</fileZip>
             <httpLoad>http://localhost:9090/apps/</httpLoad>
             <commandRunApp>
@@ -61,7 +60,6 @@
             <listOfChanges>
                 <![CDATA[<html>
                 <b>
-                09.08.2016:
                 Что то сделано
                 </b>
                 ]]>
@@ -75,7 +73,7 @@
             <description>
                 <![CDATA[<html>
                 <p>
-                    Приложение для планирования работы
+                    Тестовое GUI приложение не несущее смысловой нагрузки
                 </p>
                 ]]>
             </description>
