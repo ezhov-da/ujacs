@@ -23,11 +23,9 @@ public class UnpackJarResources {
     }
 
     public void createAndCopy() throws IOException {
-        LOG.info("Begin unpack server resources");
         Directory directory =
                 JAXB.unmarshal(inputStreamFileXml, Directory.class);
         recursiveProcess(directory, pathRootCreateFolders, "");
-        LOG.info("Server resources unpacked");
     }
 
     private void recursiveProcess(Directory directory, String pathTo, String pathFrom) throws IOException {
@@ -60,14 +58,14 @@ public class UnpackJarResources {
         java.io.File file = new java.io.File(pathCreateFolder);
         if (!file.exists()) {
             file.mkdirs();
-            LOG.log(Level.CONFIG, "Create folder [{0}]", pathCreateFolder);
+            LOG.log(Level.CONFIG, "Создана папка [{0}]", pathCreateFolder);
         }
     }
 
     private void copyFile(String pathFromFile, String pathToFile) throws IOException {
         java.io.File file = new java.io.File(pathToFile);
         if (!file.exists()) {
-            LOG.log(Level.CONFIG, "Copy file from [{0}] to [{1}]", new Object[]{pathFromFile, pathToFile});
+            LOG.log(Level.CONFIG, "Копирование файла: [{0}] в [{1}]", new Object[]{pathFromFile, pathToFile});
             Files.copy(
                     getClass().getResourceAsStream(pathFromFile),
                     file.toPath(),
