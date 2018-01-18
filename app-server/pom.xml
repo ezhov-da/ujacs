@@ -80,6 +80,7 @@
                     <execution>
                         <phase>package</phase>
                         <configuration>
+                            <!--TODO: паковать Java вместе с архивом-->
                             <tasks>
                                 <!--Копируем *.bat файлы в target-->
                                 <copy todir="${project.build.directory}">
