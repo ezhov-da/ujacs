@@ -7,7 +7,7 @@
             </nameAppUser>
             <nameAppSystem>app-test-console</nameAppSystem>
             <version>0.1</version>
-            <fileZip>app-test-console.zip</fileZip>
+            <fileZip>app-test-console</fileZip>
             <httpLoad>http://localhost:9090/apps/</httpLoad>
             <commandRunApp>
                 <![CDATA["${JAVA_HOME}\bin\java" -Xmx768m -jar "${PATH_TO_APP}\app-test-console.jar"]]>
@@ -46,7 +46,7 @@
             </nameAppUser>
             <nameAppSystem>app-test-gui</nameAppSystem>
             <version>0.1</version>
-            <fileZip>app-test-gui.zip</fileZip>
+            <fileZip>app-test-gui</fileZip>
             <httpLoad>http://localhost:9090/apps/</httpLoad>
             <commandRunApp>
                 <![CDATA["${JAVA_HOME}\bin\javaw" -Xmx768m -jar "${PATH_TO_APP}\app-test-gui.jar"]]>

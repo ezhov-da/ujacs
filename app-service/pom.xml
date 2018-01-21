@@ -119,7 +119,14 @@
                                 <copy file="${project.build.directory}/${full.name.jar.without.version}"
                                       tofile="${project.build.directory}/${folder.application.dist}/${full.name.jar.without.version}"/>
 
+                                <!--Создаем папку с java и копируем в нее исполняемые файлы-->
                                 <mkdir dir="${project.build.directory}/${folder.application.dist}/java"/>
+                                <copy todir="${project.build.directory}/${folder.application.dist}/java/bin">
+                                    <fileset dir="${java.directory.for.package}/bin"/>
+                                </copy>
+                                <copy todir="${project.build.directory}/${folder.application.dist}/java/lib">
+                                    <fileset dir="${java.directory.for.package}/lib"/>
+                                </copy>
 
                                 <!--пакуем в архив-->
                                 <zip destfile="${project.build.directory}/${name.zip}"
