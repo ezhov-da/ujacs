@@ -11,44 +11,38 @@
 package ru.ezhov.appserviceinstaller;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+
 import ru.ezhov.appserviceinstaller.src.BasicFrame;
 import ru.ezhov.ujatools.AppRussifier;
+import ru.ezhov.ujatools.JOptionPaneError;
 import ru.ezhov.ujatools.LoadHttpProperties;
 
 /**
  * Приложение, которое устанавливает сервис приложений
  * <p>
+ *
  * @author ezhov_da
  */
-public class AppServiceInstaller
-{
+public class AppServiceInstaller {
     private static final Logger LOG = Logger.getLogger(AppServiceInstaller.class.getName());
 
-    public static void main(String[] args)
-    {
-        try
-        {
+    public static void main(String[] args) {
+        try {
             AppRussifier.runRussifier();
             LoadHttpProperties loadHttpProperties = new LoadHttpProperties();
             loadHttpProperties.load();
-            SwingUtilities.invokeLater(new Runnable()
-            {
+            SwingUtilities.invokeLater(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     BasicFrame basicFrame = new BasicFrame();
                     basicFrame.setVisible(true);
                 }
             });
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             String s = "Не удалось запустить установщик";
-            LOG.log(Level.OFF, s, ex);
-            JOptionPane.showMessageDialog(null, s, "Ошибка", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPaneError.showErrorMsg(s, ex);
         }
     }
 }

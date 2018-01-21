@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.ezhov.ujatools.xmlobjects.RunnerApp;
 
@@ -12,6 +14,7 @@ import ru.ezhov.ujatools.xmlobjects.RunnerApp;
  *
  * @author ezhov_da
  */
+@Ignore
 public class StartAppTest
 {
 

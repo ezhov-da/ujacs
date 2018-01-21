@@ -6,30 +6,148 @@
         <groupId>ru.ezhov</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>app-service</artifactId>
     <packaging>jar</packaging>
+    <version>0.1</version>
 
     <name>app-service</name>
-    <url>http://maven.apache.org</url>
 
     <properties>
+        <main.class>ru.ezhov.appservice.AppService</main.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.file>config.properties</version.file>
+        <app.const.version.file>app.version</app.const.version.file>
+        <name.zip>${project.artifactId}_${project.version}.zip</name.zip>
+        <folder.application.dist>dist</folder.application.dist>
+        <full.name.jar.without.version>${project.artifactId}.${project.packaging}</full.name.jar.without.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>uja-tools</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.swinglabs/swingx -->
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swingx</artifactId>
+            <version>1.6.1</version>
         </dependency>
 
         <dependency>
-            <groupId>ru.ezhov</groupId>
-            <artifactId>uja-tools</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!--http://maven.apache.org/plugins/maven-assembly-plugin/usage.html-->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>${main.class}</mainClass>
+                        </manifest>
+                    </archive>
+                    <finalName>${artifactId}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>copy-write-cmd</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <!--===========================================================
+                                СОБИРАЕМ ПРОЕКТ В АРХИВ ДЛЯ РАЗВЕРТЫВАНИЯ НА СЕРВЕРЕ ПРИЛОЖЕНИЙ
+                                ============================================================-->
+
+                                <!-- Создаем файл с версией-->
+                                <echo file="${project.build.directory}/${folder.application.dist}/${version.file}"
+                                      append="true">
+                                    <![CDATA[
+                                ${app.const.version.file}=${project.version}
+                                ]]>
+                                </echo>
+
+                                <!--Создаем bat для запуска-->
+                                <echo file="${project.build.directory}/${folder.application.dist}/run.bat"
+                                      append="true">
+                                    <![CDATA[
+                                cd /d %~dp0 && start "run" "%JAVA_HOME%\bin\java" -jar -Xmx768m "%~dp0\${full.name.jar.without.version}" rem home
+                                ]]>
+                                </echo>
+
+                                <!--Копируем jar файл в директорию для сборки-->
+                                <copy file="${project.build.directory}/${full.name.jar.without.version}"
+                                      tofile="${project.build.directory}/${folder.application.dist}/${full.name.jar.without.version}"/>
+
+                                <!--Создаем папку с java и копируем в нее исполняемые файлы-->
+                                <mkdir dir="${project.build.directory}/${folder.application.dist}/java"/>
+                                <copy todir="${project.build.directory}/${folder.application.dist}/java/bin">
+                                    <fileset dir="${java.directory.for.package}/bin"/>
+                                </copy>
+                                <copy todir="${project.build.directory}/${folder.application.dist}/java/lib">
+                                    <fileset dir="${java.directory.for.package}/lib"/>
+                                </copy>
+
+                                <!--пакуем в архив-->
+                                <zip destfile="${project.build.directory}/${name.zip}"
+                                     basedir="${project.build.directory}/${folder.application.dist}"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

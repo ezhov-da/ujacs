@@ -6,47 +6,61 @@
     <groupId>ru.ezhov</groupId>
     <artifactId>ujacs</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
     <modules>
-        <module>app-server</module>
+        <module>app-test-gui</module>
+        <module>app-test-console</module>
+
+        <module>uja-tools</module>
         <module>app-service</module>
         <module>app-service-installer</module>
-        <module>tools</module>
         <module>app-service-updater</module>
         <module>app-server</module>
     </modules>
-    <packaging>pom</packaging>
 
     <name>ujacs</name>
     <url>https://github.com/ezhov-da/ujacs</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jna-platform.version>4.0.0</jna-platform.version>
+        <commons-compress.version>1.10</commons-compress.version>
+        <xstream.version>1.4.1</xstream.version>
+        <junit.version>4.12</junit.version>
+
+        <!--Это одна из свмых важных переменных!-->
+        <!--Так как сервис использует собсвенную jvm для запуска приложений,-->
+        <!--необходимо указать какую использовать и упаковывать-->
+        <java.directory.for.package>E:/-programs-/jre1.8.0_151</java.directory.for.package>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna-platform</artifactId>
-            <version>4.0.0</version>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna-platform</artifactId>
+                <version>${jna-platform.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.10</version>
-        </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.4.1</version>
-        </dependency>
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>${xstream.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

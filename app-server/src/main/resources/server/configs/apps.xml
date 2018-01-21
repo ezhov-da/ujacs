@@ -1,0 +1,82 @@
+<apps xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="apps.xsd">
+    <applicationInstances>
+        <applicationInstance>
+            <nameAppUser>
+                <![CDATA[<html><b>Тестовое консольное приложение</b> v.%s]]>
+            </nameAppUser>
+            <nameAppSystem>app-test-console</nameAppSystem>
+            <version>0.1</version>
+            <fileZip>app-test-console</fileZip>
+            <httpLoad>http://localhost:9090/apps/</httpLoad>
+            <commandRunApp>
+                <![CDATA["${JAVA_HOME}\bin\java" -Xmx768m -jar "${PATH_TO_APP}\app-test-console.jar"]]>
+            </commandRunApp>
+            <news>
+                <![CDATA[<html>Хей, это первая версия ))]]>
+            </news>
+            <httpIconImage>
+                http://localhost:9090/icon/default_16x16.png
+            </httpIconImage>
+            <listOfChanges>
+                <![CDATA[<html>
+                <b>
+                Что то сделано
+                </b>
+                ]]>
+            </listOfChanges>
+            <listUsersGood>
+                <string>*</string>
+            </listUsersGood>
+            <listUsersBad>
+                <string/>
+            </listUsersBad>
+            <description>
+                <![CDATA[<html>
+                <p>
+                    Тестовое консольное приложение не несущее смысловой нагрузки
+                </p>
+                ]]>
+            </description>
+        </applicationInstance>
+
+        <applicationInstance>
+            <nameAppUser>
+                <![CDATA[<html><b>Тестовое GUI приложение</b> v.%s]]>
+            </nameAppUser>
+            <nameAppSystem>app-test-gui</nameAppSystem>
+            <version>0.1</version>
+            <fileZip>app-test-gui</fileZip>
+            <httpLoad>http://localhost:9090/apps/</httpLoad>
+            <commandRunApp>
+                <![CDATA["${JAVA_HOME}\bin\javaw" -Xmx768m -jar "${PATH_TO_APP}\app-test-gui.jar"]]>
+            </commandRunApp>
+            <news>
+                <![CDATA[<html>Обновлено :)]]>
+            </news>
+            <httpIconImage>
+                http://localhost:9090/icon/spt_16x16.png
+            </httpIconImage>
+            <listOfChanges>
+                <![CDATA[<html>
+                <b>
+                Что то сделано
+                </b>
+                ]]>
+            </listOfChanges>
+            <listUsersGood>
+                <string>*</string>
+            </listUsersGood>
+            <listUsersBad>
+                <string/>
+            </listUsersBad>
+            <description>
+                <![CDATA[<html>
+                <p>
+                    Тестовое GUI приложение не несущее смысловой нагрузки
+                </p>
+                ]]>
+            </description>
+        </applicationInstance>
+    </applicationInstances>
+</apps>

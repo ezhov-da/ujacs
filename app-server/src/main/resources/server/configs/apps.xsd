@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="apps">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">
+                Корневой элемент
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="applicationInstances" minOccurs="1"
+                             maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="ru">
+                            Приложения зарегистрированные в сервисе
+                        </xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="applicationInstance"
+                                         minOccurs="1" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                    <xsd:documentation xml:lang="ru">
+                                        Конкретное приложение
+                                    </xsd:documentation>
+                                </xsd:annotation>
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="nameAppUser"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    название приложения для
+                                                    пользователя
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="nameAppSystem"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    название приложения и папки
+                                                    установки для системы должно быть уникально в контексте всех
+                                                    зарегистрированных приложений
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="version"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    версия приложения, именно по
+                                                    данной версии будет
+                                                    проиходить обновление
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="fileZip"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    архив приложения
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="httpLoad"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    откуда скачивать архив
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="commandRunApp"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    <![CDATA[
+                                                    строка запуска для приложения
+                                                    ${JAVA_HOME} - путь к установленной java
+                                                    ${PATH_TO_APP} - путь к папке, в которой лежит запускаемый файл
+                                                    ]]>
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="news"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    что изменено
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="httpIconImage"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="listOfChanges"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    список всех изменений
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="listUsersGood">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    список пользователей
+                                                    (username
+                                                    компьютера) которые могут
+                                                    работать с
+                                                    приложением
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="string"
+                                                                 minOccurs="1"
+                                                                 maxOccurs="unbounded"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+
+                                        <xsd:element name="listUsersBad">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="string"
+                                                                 minOccurs="1"
+                                                                 maxOccurs="unbounded"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="description"
+                                                     type="xsd:string">
+                                            <xsd:annotation>
+                                                <xsd:documentation
+                                                        xml:lang="ru">
+                                                    описание приложения
+                                                    отображаемое пользователям
+                                                </xsd:documentation>
+                                            </xsd:annotation>
+
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
