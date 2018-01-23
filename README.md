@@ -1,4 +1,4 @@
-#UJACS (update java application client server)
+# UJACS (update java application client server)
 
 Данное приложение предназначено для удобной поставки пользовательских приложений с контролем доступов к ним, а так же обновлениями.
 
