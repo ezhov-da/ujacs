@@ -29,6 +29,3 @@
 **config.properties**  
 **installer.properties**  
 **app.xml**  
-
-
-- UJACS использовать другое логирование (SL4J)
