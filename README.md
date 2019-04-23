@@ -1,4 +1,4 @@
-#UJACS (update java application client server)
+# UJACS (update java application client server)
 
 Данное приложение предназначено для удобной поставки пользовательских приложений с контролем доступов к ним, а так же обновлениями.
 
@@ -24,8 +24,8 @@
 После запуска будет доступно два приложения.
 
 
-
+//TODO:  
 Для сборки приложения в боевом режиме необходимо заменить host в:  
 **config.properties**  
 **installer.properties**  
-**app.xml**
+**app.xml**  
