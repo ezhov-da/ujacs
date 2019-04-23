@@ -32,7 +32,7 @@
         <!--Это одна из самых важных переменных!-->
         <!--Так как сервис использует собственную jvm для запуска приложений,-->
         <!--необходимо указать какую использовать и упаковывать-->
-        <java.directory.for.package>E:/-programs-/jre1.8.0_151</java.directory.for.package>
+        <java.directory.for.package>D:/programs/jdk1.8.0_151/jre</java.directory.for.package>
     </properties>
 
     <dependencyManagement>
