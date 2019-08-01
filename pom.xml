@@ -17,6 +17,7 @@
         <module>app-service-installer</module>
         <module>app-service-updater</module>
         <module>app-server</module>
+        <module>ujacs-server</module>
     </modules>
 
     <name>ujacs</name>
