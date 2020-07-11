@@ -4,20 +4,13 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.junit.Test;
 
-/**
- *
- * @author ezhov_da
- */
-public class RunnerAppHolderTest
-{
+public class RunnerAppHolderTest {
 
-    public RunnerAppHolderTest()
-    {
+    public RunnerAppHolderTest() {
     }
 
     @Test
-    public void testSomeMethod()
-    {
+    public void testSomeMethod() {
         XStream xStream = new XStream(new DomDriver());
         xStream.alias("runnerAppHolder", RunnerAppHolder.class);
         xStream.alias("runnerApp", RunnerApp.class);
