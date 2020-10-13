@@ -27,7 +27,7 @@
         <jna-platform.version>4.0.0</jna-platform.version>
         <commons-compress.version>1.10</commons-compress.version>
         <xstream.version>1.4.6</xstream.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
 
         <!--Это одна из самых важных переменных!-->
         <!--Так как сервис использует собственную jvm для запуска приложений,-->
